@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp-template"
+rootProject.name = "cbor"
 
 include(":library")

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "kmp.template"
+    namespace = "dev.kryptonreborn.cbor"
 }
 
 kotlin {
@@ -11,6 +11,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinStdLib)
+                implementation(libs.kotlinxIo)
+                implementation(libs.kotlinBignum)
             }
         }
     }
