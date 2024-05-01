@@ -12,9 +12,24 @@ open class CborArray(
     fun get(index: Int): CborElement = data[index]
 
     fun remove(index: Int): CborElement = data.removeAt(index)
+
+    fun size(): Int = data.size
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CborArray) return false
+
+        if (data != other.data) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return data.hashCode()
+    }
 }
 
-data class RationalNumber(
+data class CborRationalNumber(
     val numerator: CborNumber,
     val denominator: CborNumber,
 ) : CborArray() {
@@ -27,21 +42,29 @@ data class RationalNumber(
         require(!denominator.value.isZero()) {
             "Denominator must be non-zero!"
         }
-        tag = CborTag(30)
+        tag = CborTag(TAG_VALUE)
         add(numerator)
         add(denominator)
     }
+
+    companion object {
+        const val TAG_VALUE = 30L
+    }
 }
 
-data class LanguageTaggedString(
+data class CborLanguageTaggedString(
     val language: CborUnicodeString,
     val string: CborUnicodeString,
 ) : CborArray() {
     constructor(language: String, string: String) : this(CborUnicodeString(language), CborUnicodeString(string))
 
     init {
-        tag = CborTag(38)
+        tag = CborTag(TAG_VALUE)
         add(language)
         add(string)
+    }
+
+    companion object {
+        const val TAG_VALUE = 38L
     }
 }

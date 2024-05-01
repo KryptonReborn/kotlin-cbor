@@ -1,7 +1,7 @@
 package dev.kryptonreborn.cbor
 
 open class CborMap(
-    private val data: MutableMap<CborElement, CborElement>,
+    private val data: MutableMap<CborElement, CborElement> = mutableMapOf(),
 ) : CborChunkableElement(majorType = MajorType.MAP) {
     fun keys(): Set<CborElement> = data.keys.toSet()
 
@@ -12,5 +12,18 @@ open class CborMap(
     fun get(key: CborElement): CborElement? = data[key]
 
     fun remove(key: CborElement): CborElement? = data.remove(key)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CborMap) return false
+
+        if (data != other.data) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return data.hashCode()
+    }
 }
 

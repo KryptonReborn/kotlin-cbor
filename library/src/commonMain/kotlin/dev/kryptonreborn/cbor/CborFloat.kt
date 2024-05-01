@@ -5,13 +5,13 @@ sealed class CborFloat(
     specialType: SpecialType,
 ) : CborSpecialElement(specialType)
 
-data class CborSinglePrecisionFloat(
-    override val value: Float,
-) : CborFloat(value, SpecialType.IEEE_754_SINGLE_PRECISION_FLOAT)
-
 data class CborHalfPrecisionFloat(
     override val value: Float,
 ) : CborFloat(value, SpecialType.IEEE_754_HALF_PRECISION_FLOAT)
+
+data class CborSinglePrecisionFloat(
+    override val value: Float,
+) : CborFloat(value, SpecialType.IEEE_754_SINGLE_PRECISION_FLOAT)
 
 data class CborDoublePrecisionFloat(
     val value: Double,

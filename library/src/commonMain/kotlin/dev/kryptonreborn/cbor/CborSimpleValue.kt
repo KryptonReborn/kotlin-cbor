@@ -1,6 +1,6 @@
 package dev.kryptonreborn.cbor
 
-sealed class CborSimpleValue private constructor(
+open class CborSimpleValue private constructor(
     val value: Int,
     val simpleValueType: SimpleValueType,
     specialType: SpecialType,

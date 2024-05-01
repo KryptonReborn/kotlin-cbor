@@ -1,5 +1,9 @@
 package dev.kryptonreborn.cbor
 
 data class CborUnicodeString(
-    private val string: String,
-) : CborChunkableElement(majorType = MajorType.UNICODE_STRING)
+    val string: String?,
+) : CborChunkableElement(majorType = MajorType.UNICODE_STRING) {
+    override fun toString(): String {
+        return string ?: "null"
+    }
+}
