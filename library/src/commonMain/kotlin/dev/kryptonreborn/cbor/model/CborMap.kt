@@ -16,6 +16,7 @@ open class CborMap(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CborMap) return false
+        if (!super.equals(other)) return false
 
         if (data != other.data) return false
 
@@ -23,7 +24,9 @@ open class CborMap(
     }
 
     override fun hashCode(): Int {
-        return data.hashCode()
+        var result = super.hashCode()
+        result = 31 * result + data.hashCode()
+        return result
     }
 }
 

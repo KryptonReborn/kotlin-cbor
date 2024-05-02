@@ -16,6 +16,24 @@ open class CborSimpleValue private constructor(
         SimpleValueType.ofByte(value),
         if (value <= 23) SpecialType.SIMPLE_VALUE else SpecialType.SIMPLE_VALUE_NEXT_BYTE,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CborSimpleValue) return false
+        if (!super.equals(other)) return false
+
+        if (value != other.value) return false
+        if (simpleValueType != other.simpleValueType) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + value
+        result = 31 * result + simpleValueType.hashCode()
+        return result
+    }
 }
 
 data object CborFalse : CborSimpleValue(SimpleValueType.FALSE)

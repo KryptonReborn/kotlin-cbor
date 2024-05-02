@@ -6,6 +6,7 @@ data class CborByteString(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CborByteString) return false
+        if (!super.equals(other)) return false
 
         if (bytes != null) {
             if (other.bytes == null) return false
@@ -16,6 +17,9 @@ data class CborByteString(
     }
 
     override fun hashCode(): Int {
-        return bytes?.contentHashCode() ?: 0
+        var result = super.hashCode()
+        result = 31 * result + (bytes?.contentHashCode() ?: 0)
+        return result
     }
+
 }

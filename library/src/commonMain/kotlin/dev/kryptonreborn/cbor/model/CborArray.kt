@@ -18,6 +18,7 @@ open class CborArray(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CborArray) return false
+        if (!super.equals(other)) return false
 
         if (data != other.data) return false
 
@@ -25,7 +26,9 @@ open class CborArray(
     }
 
     override fun hashCode(): Int {
-        return data.hashCode()
+        var result = super.hashCode()
+        result = 31 * result + data.hashCode()
+        return result
     }
 }
 
@@ -58,6 +61,24 @@ data class CborRationalNumber(
     companion object {
         const val TAG_VALUE = 30L
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CborRationalNumber) return false
+        if (!super.equals(other)) return false
+
+        if (numerator != other.numerator) return false
+        if (denominator != other.denominator) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + numerator.hashCode()
+        result = 31 * result + denominator.hashCode()
+        return result
+    }
 }
 
 data class CborLanguageTaggedString(
@@ -74,5 +95,23 @@ data class CborLanguageTaggedString(
 
     companion object {
         const val TAG_VALUE = 38L
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CborLanguageTaggedString) return false
+        if (!super.equals(other)) return false
+
+        if (language != other.language) return false
+        if (string != other.string) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + language.hashCode()
+        result = 31 * result + string.hashCode()
+        return result
     }
 }
