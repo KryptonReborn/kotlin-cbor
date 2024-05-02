@@ -24,51 +24,51 @@ class CborEncoder(
 
     companion object {
         /**
-         * Encode a list of [DataItem]s, also known as a stream, to a byte array.
+         * Encode a list of [CborElement]s, also known as a stream, to a byte array.
          *
-         * @param dataItems a list of [DataItem]s
+         * @param elements a list of [CborElement]s
          */
-        fun encodeToBytes(dataItems: List<CborElement>): ByteArray {
+        fun encodeToBytes(elements: List<CborElement>): ByteArray {
             val buffer = Buffer()
             val encoder = CborEncoder(buffer)
-            encoder.encode(dataItems)
+            encoder.encode(elements)
             return buffer.readByteArray()
         }
 
         /**
-         * Encode a single [DataItem] to a byte array.
+         * Encode a single [CborElement] to a byte array.
          *
-         * @param dataItem the [DataItem] to encode. If null, encoder encodes a
-         * [SimpleValue] NULL value.
+         * @param element the [CborElement] to encode. If null, encoder encodes a
+         * [CborSimpleValue] NULL value.
          */
-        fun encodeToBytes(dataItem: CborElement?): ByteArray {
+        fun encodeToBytes(element: CborElement?): ByteArray {
             val buffer = Buffer()
             val encoder = CborEncoder(buffer)
-            encoder.encode(dataItem)
+            encoder.encode(element)
             return buffer.readByteArray()
         }
     }
 
     /**
-     * Encode a list of [DataItem]s, also known as a stream.
+     * Encode a list of [CborElement]s, also known as a stream.
      *
-     * @param dataItems a list of [DataItem]s
-     * @throws CborException if the [DataItem]s could not be encoded or there
-     * was an problem with the [OutputStream].
+     * @param elements a list of [CborElement]s
+     * @throws CborException if the [CborElement]s could not be encoded or there
+     * was an problem with the [Sink].
      */
     @Throws(CborException::class)
-    fun encode(dataItems: List<CborElement?>) {
-        for (dataItem in dataItems) {
-            encode(dataItem)
+    fun encode(elements: List<CborElement?>) {
+        for (element in elements) {
+            encode(element)
         }
     }
 
     /**
-     * Encode a single {@link DataItem}.
+     * Encode a single {@link CborElement}.
      *
-     * @param dataItem the {@link DataItem} to encode. If null, encoder encodes a
+     * @param data the {@link CborElement} to encode. If null, encoder encodes a
      *                 {@link SimpleValue} NULL value.
-     * @throws CborException if {@link DataItem} could not be encoded or there was
+     * @throws CborException if {@link CborElement} could not be encoded or there was
      *                       an problem with the {@link OutputStream}.
      */
     @Throws(CborException::class)

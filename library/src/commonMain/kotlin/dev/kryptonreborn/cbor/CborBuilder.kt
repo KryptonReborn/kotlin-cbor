@@ -16,8 +16,8 @@ class CborBuilder(
         return elements
     }
 
-    fun add(dataItem: CborElement): CborBuilder {
-        elements.add(dataItem)
+    fun add(element: CborElement): CborBuilder {
+        elements.add(element)
         return this
     }
 
@@ -109,7 +109,7 @@ class CborBuilder(
         return CborMapBuilder(map, this)
     }
 
-    override fun addChunk(dataItem: CborElement) {
-        add(dataItem)
+    override fun addChunk(element: CborElement) {
+        add(element)
     }
 }

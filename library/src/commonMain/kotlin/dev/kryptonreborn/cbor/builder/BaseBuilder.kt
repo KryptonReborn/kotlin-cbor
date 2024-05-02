@@ -5,7 +5,7 @@ import dev.kryptonreborn.cbor.model.CborElement
 abstract class BaseBuilder<T>(
     protected val parent: T?,
 ) {
-    open fun addChunk(dataItem: CborElement) {
+    open fun addChunk(element: CborElement) {
         throw IllegalStateException()
     }
 }

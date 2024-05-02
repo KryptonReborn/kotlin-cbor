@@ -31,7 +31,7 @@ class CborDecoder(
          * Convenience method to decode a byte array directly.
          *
          * @param bytes the CBOR encoded data
-         * @return a list of [DataItem]s
+         * @return a list of [CborElement]s
          * @throws CborException if decoding failed
          */
         @Throws(CborException::class)
@@ -48,16 +48,16 @@ class CborDecoder(
      */
     @Throws(CborException::class)
     fun decode(): List<CborElement> {
-        val dataItems = mutableListOf<CborElement>()
-        var dataItem: CborElement?
-        while ((decodeNext().also { dataItem = it }) != null) {
-            dataItems.add(dataItem!!)
+        val elements = mutableListOf<CborElement>()
+        var element: CborElement?
+        while ((decodeNext().also { element = it }) != null) {
+            elements.add(element!!)
         }
-        return dataItems
+        return elements
     }
 
     /**
-     * Decodes exactly one DataItem from the input stream.
+     * Decodes exactly one CborElement from the input stream.
      *
      * @return a [CborElement] or null if end of stream has reached.
      * @throws CborException if decoding failed

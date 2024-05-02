@@ -9,8 +9,8 @@ class CborArrayBuilder<T : BaseBuilder<*>>(
     private val array: CborArray,
     parent: T,
 ) : BaseBuilder<T>(parent) {
-    fun add(dataItem: CborElement): CborArrayBuilder<T> {
-        array.add(dataItem)
+    fun add(element: CborElement): CborArrayBuilder<T> {
+        array.add(element)
         return this
     }
 
