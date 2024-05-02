@@ -21,5 +21,4 @@ data class CborByteString(
         result = 31 * result + (bytes?.contentHashCode() ?: 0)
         return result
     }
-
 }

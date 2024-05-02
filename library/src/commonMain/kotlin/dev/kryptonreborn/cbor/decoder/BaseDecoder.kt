@@ -18,6 +18,7 @@ abstract class BaseDecoder<T : CborElement>(
     protected val decoder: CborDecoder,
 ) {
     companion object {
+        val MINUS_ONE = (-1).toBigInteger()
         const val BUFFER_SIZE = 4096
         const val INFINITY = -1L
     }

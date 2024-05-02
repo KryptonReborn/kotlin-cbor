@@ -103,3 +103,6 @@ enum class MajorType(val value: Int) {
         }
     }
 }
+
+val MajorType.symbol
+    get() = value shl 5

@@ -1,6 +1,6 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.CborEncoder
 import dev.kryptonreborn.cbor.model.*
 import dev.kryptonreborn.cbor.model.SimpleValueType.*
 import dev.kryptonreborn.cbor.model.SpecialType.*
@@ -23,11 +23,9 @@ class CborSpecialElementEncoder(
             SIMPLE_VALUE -> {
                 val simpleValue = data as CborSimpleValue
                 when (simpleValue.simpleValueType) {
-                    FALSE, NULL, TRUE, UNDEFINED -> {
-                        writeBytes(
-                            ((7 shl 5) or simpleValue.simpleValueType.value).toByte(),
-                        )
-                    }
+                    FALSE, NULL, TRUE, UNDEFINED -> writeBytes(
+                        ((7 shl 5) or simpleValue.simpleValueType.value).toByte(),
+                    )
 
                     UNALLOCATED -> writeBytes(
                         ((7 shl 5) or simpleValue.value).toByte(),

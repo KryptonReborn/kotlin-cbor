@@ -7,6 +7,7 @@ import dev.kryptonreborn.cbor.model.CborElement
 import dev.kryptonreborn.cbor.CborEncoder
 import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.MajorType
+import dev.kryptonreborn.cbor.model.symbol
 import kotlinx.io.Sink
 
 
@@ -24,14 +25,14 @@ abstract class BaseEncoder<T : CborElement>(
 
     @Throws(CborException::class)
     protected fun writeIndefiniteLengthType(majorType: MajorType) {
-        var symbol = majorType.value shl 5
+        var symbol = majorType.symbol
         symbol = symbol or INDEFINITE.value
         writeBytes(symbol.toByte())
     }
 
     @Throws(CborException::class)
     protected fun writeType(majorType: MajorType, length: Long) {
-        var symbol = majorType.value shl 5
+        var symbol = majorType.symbol
         when {
             length <= 23L -> {
                 writeBytes(
@@ -87,7 +88,7 @@ abstract class BaseEncoder<T : CborElement>(
     @Throws(CborException::class)
     protected fun writeType(majorType: MajorType, length: BigInteger) {
         val negative = majorType === MajorType.NEGATIVE_INTEGER
-        var symbol = majorType.value shl 5
+        var symbol = majorType.symbol
         when {
             length < 24.toBigInteger() -> {
                 writeBytes(

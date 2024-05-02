@@ -27,6 +27,8 @@ class CborEncoder(
          * Encode a list of [CborElement]s, also known as a stream, to a byte array.
          *
          * @param elements a list of [CborElement]s
+         *
+         * @return the encoded cbor as [ByteArray]
          */
         fun encodeToBytes(elements: List<CborElement>): ByteArray {
             val buffer = Buffer()
@@ -40,6 +42,8 @@ class CborEncoder(
          *
          * @param element the [CborElement] to encode. If null, encoder encodes a
          * [CborSimpleValue] NULL value.
+         *
+         * @return the encoded cbor as [ByteArray]
          */
         fun encodeToBytes(element: CborElement?): ByteArray {
             val buffer = Buffer()
@@ -54,7 +58,7 @@ class CborEncoder(
      *
      * @param elements a list of [CborElement]s
      * @throws CborException if the [CborElement]s could not be encoded or there
-     * was an problem with the [Sink].
+     * was a problem with the [Sink].
      */
     @Throws(CborException::class)
     fun encode(elements: List<CborElement?>) {
@@ -69,7 +73,7 @@ class CborEncoder(
      * @param data the {@link CborElement} to encode. If null, encoder encodes a
      *                 {@link SimpleValue} NULL value.
      * @throws CborException if {@link CborElement} could not be encoded or there was
-     *                       an problem with the {@link OutputStream}.
+     *                       a problem with the {@link OutputStream}.
      */
     @Throws(CborException::class)
     fun encode(data: CborElement?) {

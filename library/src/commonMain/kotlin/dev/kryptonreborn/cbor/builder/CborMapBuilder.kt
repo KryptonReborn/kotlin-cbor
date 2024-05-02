@@ -13,70 +13,57 @@ class CborMapBuilder<T : BaseBuilder<*>>(
 ) : BaseBuilder<T>(parent) {
     private var lastItem: CborElement? = null
 
-    fun put(key: CborElement, value: CborElement): CborMapBuilder<T> {
+    fun put(key: CborElement, value: CborElement): CborMapBuilder<T> = this.apply {
         map.put(key, value)
         lastItem = value
-        return this
     }
 
-    fun put(key: Long, value: Long): CborMapBuilder<T> {
+    fun put(key: Long, value: Long): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: Long, value: Boolean): CborMapBuilder<T> {
+    fun put(key: Long, value: Boolean): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: Long, value: Float): CborMapBuilder<T> {
+    fun put(key: Long, value: Float): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: Long, value: Double): CborMapBuilder<T> {
+    fun put(key: Long, value: Double): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: Long, value: ByteArray?): CborMapBuilder<T> {
+    fun put(key: Long, value: ByteArray?): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: Long, value: String?): CborMapBuilder<T> {
+    fun put(key: Long, value: String?): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: Long): CborMapBuilder<T> {
+    fun put(key: String, value: Long): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: Boolean): CborMapBuilder<T> {
+    fun put(key: String, value: Boolean): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: Float): CborMapBuilder<T> {
+    fun put(key: String, value: Float): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: Double): CborMapBuilder<T> {
+    fun put(key: String, value: Double): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: ByteArray?): CborMapBuilder<T> {
+    fun put(key: String, value: ByteArray?): CborMapBuilder<T> = this.apply {
         map.put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
-    fun put(key: String, value: String?): CborMapBuilder<T> {
+    fun put(key: String, value: String?): CborMapBuilder<T> = this.apply {
         put(key.toCborElement(), value.toCborElement())
-        return this
     }
 
     fun putArray(key: CborElement): CborArrayBuilder<CborMapBuilder<T>> {
@@ -98,21 +85,15 @@ class CborMapBuilder<T : BaseBuilder<*>>(
     }
 
     fun startArray(key: CborElement): CborArrayBuilder<CborMapBuilder<T>> {
-        val array = CborArray().apply {
-            chunked = true
-        }
+        val array = CborArray().apply { chunked = true }
         put(key, array)
         return CborArrayBuilder(array, this)
     }
 
-    fun startArray(key: Long): CborArrayBuilder<CborMapBuilder<T>> {
-        return startArray(key.toCborElement())
-    }
+    fun startArray(key: Long): CborArrayBuilder<CborMapBuilder<T>> = startArray(key.toCborElement())
 
     fun startArray(key: String): CborArrayBuilder<CborMapBuilder<T>> {
-        val array = CborArray().apply {
-            chunked = true
-        }
+        val array = CborArray().apply { chunked = true }
         put(key.toCborElement(), array)
         return CborArrayBuilder(array, this)
     }
@@ -135,53 +116,34 @@ class CborMapBuilder<T : BaseBuilder<*>>(
         return CborMapBuilder(nestedMap, this)
     }
 
-    fun startMap(key: CborElement): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key, true)
-    }
+    fun startMap(key: CborElement): CborMapBuilder<CborMapBuilder<T>> = startMap(key, true)
 
     private fun startMap(key: CborElement, chunked: Boolean): CborMapBuilder<CborMapBuilder<T>> {
-        val nestedMap = CborMap().apply {
-            this.chunked = chunked
-        }
+        val nestedMap = CborMap().apply { this.chunked = chunked }
         put(key, nestedMap)
         return CborMapBuilder(nestedMap, this)
     }
 
-    fun startMapNotChunked(key: CborElement): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key, false)
-    }
+    fun startMapNotChunked(key: CborElement): CborMapBuilder<CborMapBuilder<T>> = startMap(key, false)
 
-    fun tagged(tag: Long): CborMapBuilder<T> {
+    fun tagged(tag: Long): CborMapBuilder<T> = this.apply {
         lastItem?.let { it.getOuterTaggable().tag = tag.asCborTag() }
             ?: throw CborException("Can't add a tag before adding an item")
-        return this
     }
 
-    fun startMap(key: Long): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key.toCborElement())
-    }
+    fun startMap(key: Long): CborMapBuilder<CborMapBuilder<T>> = startMap(key.toCborElement())
 
-    fun startMap(key: String?): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key.toCborElement())
-    }
+    fun startMap(key: String?): CborMapBuilder<CborMapBuilder<T>> = startMap(key.toCborElement())
 
-    fun startMapNotChunked(key: Long): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key.toCborElement(), false)
-    }
+    fun startMapNotChunked(key: Long): CborMapBuilder<CborMapBuilder<T>> = startMap(key.toCborElement(), false)
 
-    fun startMapNotChunked(key: String?): CborMapBuilder<CborMapBuilder<T>> {
-        return startMap(key.toCborElement(), false)
-    }
+    fun startMapNotChunked(key: String?): CborMapBuilder<CborMapBuilder<T>> = startMap(key.toCborElement(), false)
 
     fun end(): T {
         return parent!!
     }
 
-    fun addKey(key: Long): CborMapEntryBuilder<CborMapBuilder<T>> {
-        return CborMapEntryBuilder(key.toCborElement(), this)
-    }
+    fun addKey(key: Long): CborMapEntryBuilder<CborMapBuilder<T>> = CborMapEntryBuilder(key.toCborElement(), this)
 
-    fun addKey(key: String): CborMapEntryBuilder<CborMapBuilder<T>> {
-        return CborMapEntryBuilder(key.toCborElement(), this)
-    }
+    fun addKey(key: String): CborMapEntryBuilder<CborMapBuilder<T>> = CborMapEntryBuilder(key.toCborElement(), this)
 }

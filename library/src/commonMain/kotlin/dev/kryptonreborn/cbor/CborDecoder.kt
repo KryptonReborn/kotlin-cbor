@@ -1,8 +1,8 @@
 package dev.kryptonreborn.cbor
 
-import dev.kryptonreborn.cbor.model.MajorType.*
 import dev.kryptonreborn.cbor.decoder.*
 import dev.kryptonreborn.cbor.model.*
+import dev.kryptonreborn.cbor.model.MajorType.*
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 
@@ -70,17 +70,17 @@ class CborDecoder(
             return null
         }
         when (MajorType.ofByte(symbol)) {
-            ARRAY -> return arrayDecoder.decode(symbol)
-            BYTE_STRING -> return byteStringDecoder.decode(symbol)
-            MAP -> return mapDecoder.decode(symbol)
-            NEGATIVE_INTEGER -> return negativeIntegerDecoder.decode(symbol)
-            UNICODE_STRING -> return unicodeStringDecoder.decode(symbol)
             UNSIGNED_INTEGER -> return unsignedIntegerDecoder.decode(symbol)
+            NEGATIVE_INTEGER -> return negativeIntegerDecoder.decode(symbol)
+            BYTE_STRING -> return byteStringDecoder.decode(symbol)
+            UNICODE_STRING -> return unicodeStringDecoder.decode(symbol)
+            ARRAY -> return arrayDecoder.decode(symbol)
+            MAP -> return mapDecoder.decode(symbol)
             SPECIAL -> return specialElementDecoder.decode(symbol)
             TAG -> {
                 val tag = tagDecoder.decode(symbol)
-                val next =
-                    decodeNext() ?: throw CborException("Unexpected end of stream: tag without following data item.")
+                val next = decodeNext()
+                    ?: throw CborException("Unexpected end of stream: tag without following data item.")
 
                 if (autoDecodeRationalNumbers && tag.value == CborRationalNumber.TAG_VALUE) {
                     return decodeRationalNumber(next)

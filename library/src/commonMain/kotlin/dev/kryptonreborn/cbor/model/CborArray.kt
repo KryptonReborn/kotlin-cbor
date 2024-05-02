@@ -32,12 +32,16 @@ open class CborArray(
     }
 }
 
+fun CborArray.getOrNull(index: Int): CborElement? {
+    return if (index in 0 until size()) get(index) else null
+}
+
 fun CborArray.firstOrNull(): CborElement? {
-    return if (size() > 0) get(0) else null
+    return getOrNull(0)
 }
 
 fun CborArray.lastOrNull(): CborElement? {
-    return if (size() > 0) get(size() - 1) else null
+    return getOrNull(size() - 1)
 }
 
 data class CborRationalNumber(
@@ -85,7 +89,10 @@ data class CborLanguageTaggedString(
     val language: CborUnicodeString,
     val string: CborUnicodeString,
 ) : CborArray() {
-    constructor(language: String, string: String) : this(CborUnicodeString(language), CborUnicodeString(string))
+    constructor(language: String, string: String) : this(
+        CborUnicodeString(language),
+        CborUnicodeString(string),
+    )
 
     init {
         tag = CborTag(TAG_VALUE)

@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.*
 import dev.kryptonreborn.cbor.model.SimpleValueType.*
 import dev.kryptonreborn.cbor.model.SpecialType.*

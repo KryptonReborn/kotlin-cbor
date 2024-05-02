@@ -29,4 +29,3 @@ open class CborMap(
         return result
     }
 }
-

@@ -6,9 +6,8 @@ import dev.kryptonreborn.cbor.toCborElement
 class CborUnicodeStringBuilder<T : BaseBuilder<*>>(
     parent: T,
 ) : BaseBuilder<T>(parent) {
-    fun add(string: String?): CborUnicodeStringBuilder<T> {
+    fun add(string: String?): CborUnicodeStringBuilder<T> = this.apply {
         parent!!.addChunk(string.toCborElement())
-        return this
     }
 
     fun end(): T {

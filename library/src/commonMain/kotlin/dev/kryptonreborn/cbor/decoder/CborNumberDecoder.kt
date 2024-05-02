@@ -1,6 +1,5 @@
 package dev.kryptonreborn.cbor.decoder
 
-import com.ionspin.kotlin.bignum.integer.toBigInteger
 import dev.kryptonreborn.cbor.CborDecoder
 import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.CborNegativeInteger
@@ -11,9 +10,6 @@ class CborNegativeIntegerDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborNegativeInteger>(input, decoder) {
-    companion object {
-        val MINUS_ONE = (-1).toBigInteger()
-    }
 
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborNegativeInteger {

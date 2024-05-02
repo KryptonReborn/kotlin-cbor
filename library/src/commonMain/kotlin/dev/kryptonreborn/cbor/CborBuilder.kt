@@ -7,82 +7,65 @@ import dev.kryptonreborn.cbor.model.*
 class CborBuilder(
     private val elements: MutableList<CborElement> = mutableListOf()
 ) : BaseBuilder<CborBuilder>(null) {
-    fun reset(): CborBuilder {
+    fun reset(): CborBuilder = this.apply {
         elements.clear()
-        return this
     }
 
-    fun build(): List<CborElement> {
-        return elements
-    }
+    fun build(): List<CborElement> = elements.toList()
 
-    fun add(element: CborElement): CborBuilder {
+    fun add(element: CborElement): CborBuilder = this.apply {
         elements.add(element)
-        return this
     }
 
-    fun add(value: Long): CborBuilder {
+    fun add(value: Long): CborBuilder = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: BigInteger): CborBuilder {
+    fun add(value: BigInteger): CborBuilder = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Boolean): CborBuilder {
+    fun add(value: Boolean): CborBuilder = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Float): CborBuilder {
+    fun add(value: Float): CborBuilder = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Double): CborBuilder {
+    fun add(value: Double): CborBuilder = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(bytes: ByteArray?): CborBuilder {
+    fun add(bytes: ByteArray?): CborBuilder = this.apply {
         add(bytes.toCborElement())
-        return this
     }
 
-    fun startByteString(): CborByteStringBuilder<CborBuilder> {
-        return startByteString(null)
-    }
+    fun startByteString(): CborByteStringBuilder<CborBuilder> = startByteString(null)
 
     fun startByteString(bytes: ByteArray?): CborByteStringBuilder<CborBuilder> {
         add(CborByteString(bytes).apply { chunked = true })
         return CborByteStringBuilder(this)
     }
 
-    fun add(string: String?): CborBuilder {
+    fun add(string: String?): CborBuilder = this.apply {
         add(string.toCborElement())
-        return this
     }
 
-    fun startString(): CborUnicodeStringBuilder<CborBuilder> {
-        return startString(null)
-    }
+    fun startString(): CborUnicodeStringBuilder<CborBuilder> = startString(null)
 
     fun startString(string: String?): CborUnicodeStringBuilder<CborBuilder> {
         add(CborUnicodeString(string).apply { chunked = true })
         return CborUnicodeStringBuilder(this)
     }
 
-    fun addTag(value: Long): CborBuilder {
+    fun addTag(value: Long): CborBuilder = this.apply {
         add(value.asCborTag())
-        return this
     }
 
-    fun tagged(value: Long): CborBuilder {
-        val item: CborElement = elements.lastOrNull() ?: throw CborException("Can't add a tag before adding an item")
+    fun tagged(value: Long): CborBuilder = this.apply {
+        val item = elements.lastOrNull() ?: throw CborException("Can't add a tag before adding an item")
         item.getOuterTaggable().tag = value.asCborTag()
-        return this
     }
 
     fun startArray(): CborArrayBuilder<CborBuilder> {

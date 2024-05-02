@@ -9,45 +9,37 @@ class CborArrayBuilder<T : BaseBuilder<*>>(
     private val array: CborArray,
     parent: T,
 ) : BaseBuilder<T>(parent) {
-    fun add(element: CborElement): CborArrayBuilder<T> {
+    fun add(element: CborElement): CborArrayBuilder<T> = this.apply {
         array.add(element)
-        return this
     }
 
-    fun add(value: Long): CborArrayBuilder<T> {
+    fun add(value: Long): CborArrayBuilder<T> = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Boolean): CborArrayBuilder<T> {
+    fun add(value: Boolean): CborArrayBuilder<T> = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Float): CborArrayBuilder<T> {
+    fun add(value: Float): CborArrayBuilder<T> = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(value: Double): CborArrayBuilder<T> {
+    fun add(value: Double): CborArrayBuilder<T> = this.apply {
         add(value.toCborElement())
-        return this
     }
 
-    fun add(bytes: ByteArray?): CborArrayBuilder<T> {
+    fun add(bytes: ByteArray?): CborArrayBuilder<T> = this.apply {
         add(bytes.toCborElement())
-        return this
     }
 
-    fun add(string: String?): CborArrayBuilder<T> {
+    fun add(string: String?): CborArrayBuilder<T> = this.apply {
         add(string.toCborElement())
-        return this
     }
 
-    fun tagged(tag: Long): CborArrayBuilder<T> {
+    fun tagged(tag: Long): CborArrayBuilder<T> = this.apply {
         val item = array.lastOrNull() ?: throw CborException("Can't add a tag before adding an item")
         item.getOuterTaggable().tag = tag.asCborTag()
-        return this
     }
 
     fun addArray(): CborArrayBuilder<CborArrayBuilder<T>> {
@@ -57,9 +49,7 @@ class CborArrayBuilder<T : BaseBuilder<*>>(
     }
 
     fun startArray(): CborArrayBuilder<CborArrayBuilder<T>> {
-        val nestedArray = CborArray().apply {
-            chunked = true
-        }
+        val nestedArray = CborArray().apply { chunked = true }
         add(nestedArray)
         return CborArrayBuilder(nestedArray, this)
     }
@@ -71,9 +61,7 @@ class CborArrayBuilder<T : BaseBuilder<*>>(
     }
 
     fun startMap(): CborMapBuilder<CborArrayBuilder<T>> {
-        val nestedMap = CborMap().apply {
-            chunked = true
-        }
+        val nestedMap = CborMap().apply { chunked = true }
         add(nestedMap)
         return CborMapBuilder(nestedMap, this)
     }

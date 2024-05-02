@@ -6,9 +6,8 @@ import dev.kryptonreborn.cbor.toCborElement
 class CborByteStringBuilder<T : BaseBuilder<*>>(
     parent: T,
 ) : BaseBuilder<T>(parent) {
-    fun add(bytes: ByteArray?): CborByteStringBuilder<T> {
+    fun add(bytes: ByteArray?): CborByteStringBuilder<T> = this.apply {
         parent!!.addChunk(bytes.toCborElement())
-        return this
     }
 
     fun end(): T {
