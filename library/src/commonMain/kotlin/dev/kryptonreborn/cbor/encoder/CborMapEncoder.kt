@@ -1,9 +1,9 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.CborBreak
+import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.CborEncoder
-import dev.kryptonreborn.cbor.CborMap
-import dev.kryptonreborn.cbor.MajorType
+import dev.kryptonreborn.cbor.model.CborMap
+import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Buffer
 import kotlinx.io.Sink
 import kotlinx.io.readByteArray

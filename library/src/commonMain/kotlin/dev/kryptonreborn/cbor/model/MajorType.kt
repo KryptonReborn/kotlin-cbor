@@ -1,4 +1,6 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
+
+import dev.kryptonreborn.cbor.CborException
 
 enum class MajorType(val value: Int) {
     /**

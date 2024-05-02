@@ -1,6 +1,9 @@
 package dev.kryptonreborn.cbor.decoder
 
 import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.model.CborArray
+import dev.kryptonreborn.cbor.model.CborBreak
+import dev.kryptonreborn.cbor.model.CborElement
 import kotlinx.io.Source
 
 class CborArrayDecoder(

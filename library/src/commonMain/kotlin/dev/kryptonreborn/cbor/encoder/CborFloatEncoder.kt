@@ -1,9 +1,9 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.CborDoublePrecisionFloat
+import dev.kryptonreborn.cbor.model.CborDoublePrecisionFloat
 import dev.kryptonreborn.cbor.CborEncoder
-import dev.kryptonreborn.cbor.CborHalfPrecisionFloat
-import dev.kryptonreborn.cbor.CborSinglePrecisionFloat
+import dev.kryptonreborn.cbor.model.CborHalfPrecisionFloat
+import dev.kryptonreborn.cbor.model.CborSinglePrecisionFloat
 import kotlinx.io.Sink
 
 class CborHalfPrecisionFloatEncoder(

@@ -1,4 +1,4 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
 
 data class CborUnicodeString(
     val string: String?,

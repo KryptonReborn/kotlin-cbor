@@ -1,4 +1,4 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
 
 open class CborMap(
     private val data: MutableMap<CborElement, CborElement> = mutableMapOf(),

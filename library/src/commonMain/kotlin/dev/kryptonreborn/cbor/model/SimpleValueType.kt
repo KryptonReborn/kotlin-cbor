@@ -1,4 +1,4 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
 
 enum class SimpleValueType(val value: Int) {
     FALSE(20),

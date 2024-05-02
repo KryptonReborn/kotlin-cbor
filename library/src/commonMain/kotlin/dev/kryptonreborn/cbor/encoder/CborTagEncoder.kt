@@ -1,8 +1,8 @@
 package dev.kryptonreborn.cbor.encoder
 
 import dev.kryptonreborn.cbor.CborEncoder
-import dev.kryptonreborn.cbor.CborTag
-import dev.kryptonreborn.cbor.MajorType
+import dev.kryptonreborn.cbor.model.CborTag
+import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Sink
 
 class CborTagEncoder(

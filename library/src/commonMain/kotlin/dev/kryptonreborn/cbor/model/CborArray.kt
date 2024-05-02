@@ -1,4 +1,4 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
@@ -27,6 +27,14 @@ open class CborArray(
     override fun hashCode(): Int {
         return data.hashCode()
     }
+}
+
+fun CborArray.firstOrNull(): CborElement? {
+    return if (size() > 0) get(0) else null
+}
+
+fun CborArray.lastOrNull(): CborElement? {
+    return if (size() > 0) get(size() - 1) else null
 }
 
 data class CborRationalNumber(

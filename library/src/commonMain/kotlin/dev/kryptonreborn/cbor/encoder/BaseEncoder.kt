@@ -2,11 +2,11 @@ package dev.kryptonreborn.cbor.encoder
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.toBigInteger
-import dev.kryptonreborn.cbor.AdditionalInformation.*
-import dev.kryptonreborn.cbor.CborElement
+import dev.kryptonreborn.cbor.model.AdditionalInformation.*
+import dev.kryptonreborn.cbor.model.CborElement
 import dev.kryptonreborn.cbor.CborEncoder
 import dev.kryptonreborn.cbor.CborException
-import dev.kryptonreborn.cbor.MajorType
+import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Sink
 
 

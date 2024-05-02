@@ -1,9 +1,9 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.CborBreak
+import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.CborDecoder
 import dev.kryptonreborn.cbor.CborException
-import dev.kryptonreborn.cbor.CborMap
+import dev.kryptonreborn.cbor.model.CborMap
 import kotlinx.io.Source
 
 class CborMapDecoder(

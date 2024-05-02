@@ -1,9 +1,9 @@
 package dev.kryptonreborn.cbor.encoder
 
 import dev.kryptonreborn.cbor.CborEncoder
-import dev.kryptonreborn.cbor.CborNull
-import dev.kryptonreborn.cbor.CborUnicodeString
-import dev.kryptonreborn.cbor.MajorType
+import dev.kryptonreborn.cbor.model.CborNull
+import dev.kryptonreborn.cbor.model.CborUnicodeString
+import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Sink
 
 class CborUnicodeStringEncoder(

@@ -1,8 +1,9 @@
 package dev.kryptonreborn.cbor.encoder
 
 import dev.kryptonreborn.cbor.*
-import dev.kryptonreborn.cbor.SimpleValueType.*
-import dev.kryptonreborn.cbor.SpecialType.*
+import dev.kryptonreborn.cbor.model.*
+import dev.kryptonreborn.cbor.model.SimpleValueType.*
+import dev.kryptonreborn.cbor.model.SpecialType.*
 import kotlinx.io.Sink
 
 class CborSpecialElementEncoder(

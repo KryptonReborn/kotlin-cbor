@@ -1,4 +1,4 @@
-package dev.kryptonreborn.cbor
+package dev.kryptonreborn.cbor.model
 
 sealed class CborSpecialElement(
     val specialType: SpecialType,
