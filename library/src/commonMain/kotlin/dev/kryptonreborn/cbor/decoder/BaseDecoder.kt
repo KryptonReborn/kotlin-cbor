@@ -2,15 +2,16 @@ package dev.kryptonreborn.cbor.decoder
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.toBigInteger
+import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.AdditionalInformation
 import dev.kryptonreborn.cbor.model.AdditionalInformation.*
-import dev.kryptonreborn.cbor.CborDecoder
 import dev.kryptonreborn.cbor.model.CborElement
-import dev.kryptonreborn.cbor.CborException
 import kotlinx.io.Buffer
 import kotlinx.io.EOFException
 import kotlinx.io.Source
 import kotlinx.io.readByteArray
+import kotlinx.io.readUByte
 import kotlin.math.min
 
 abstract class BaseDecoder<T : CborElement>(
@@ -29,7 +30,7 @@ abstract class BaseDecoder<T : CborElement>(
     @Throws(CborException::class)
     protected fun nextSymbol(): Int {
         try {
-            return input.readByte().toInt()
+            return input.readUByte().toInt()
         } catch (e: EOFException) {
             throw CborException("Error reading from input, there are no more bytes to read.", e)
         } catch (e: IllegalArgumentException) {
@@ -154,14 +155,14 @@ abstract class BaseDecoder<T : CborElement>(
             EIGHT_BYTES -> {
                 var eightByteValue = BigInteger.ZERO
                 val symbols = nextSymbols(8)
-                eightByteValue = eightByteValue or ((symbols[0].toInt() and 0xFF).toLong().toBigInteger() shl 56)
-                eightByteValue = eightByteValue or ((symbols[1].toInt() and 0xFF).toLong().toBigInteger() shl 48)
-                eightByteValue = eightByteValue or ((symbols[2].toInt() and 0xFF).toLong().toBigInteger() shl 40)
-                eightByteValue = eightByteValue or ((symbols[3].toInt() and 0xFF).toLong().toBigInteger() shl 32)
-                eightByteValue = eightByteValue or ((symbols[4].toInt() and 0xFF).toLong().toBigInteger() shl 24)
-                eightByteValue = eightByteValue or ((symbols[5].toInt() and 0xFF).toLong().toBigInteger() shl 16)
-                eightByteValue = eightByteValue or ((symbols[6].toInt() and 0xFF).toLong().toBigInteger() shl 8)
-                eightByteValue = eightByteValue or ((symbols[7].toInt() and 0xFF).toLong().toBigInteger() shl 0)
+                eightByteValue = eightByteValue xor ((symbols[0].toInt() and 0xFF).toLong().toBigInteger() shl 56)
+                eightByteValue = eightByteValue xor ((symbols[1].toInt() and 0xFF).toLong().toBigInteger() shl 48)
+                eightByteValue = eightByteValue xor ((symbols[2].toInt() and 0xFF).toLong().toBigInteger() shl 40)
+                eightByteValue = eightByteValue xor ((symbols[3].toInt() and 0xFF).toLong().toBigInteger() shl 32)
+                eightByteValue = eightByteValue xor ((symbols[4].toInt() and 0xFF).toLong().toBigInteger() shl 24)
+                eightByteValue = eightByteValue xor ((symbols[5].toInt() and 0xFF).toLong().toBigInteger() shl 16)
+                eightByteValue = eightByteValue xor ((symbols[6].toInt() and 0xFF).toLong().toBigInteger() shl 8)
+                eightByteValue = eightByteValue xor ((symbols[7].toInt() and 0xFF).toLong().toBigInteger() shl 0)
                 return eightByteValue
             }
 

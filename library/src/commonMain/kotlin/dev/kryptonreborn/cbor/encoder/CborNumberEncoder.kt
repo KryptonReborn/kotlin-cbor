@@ -11,7 +11,7 @@ class CborNegativeIntegerEncoder(
     cborEncoder: CborEncoder,
 ) : BaseEncoder<CborNegativeInteger>(sink, cborEncoder) {
     override fun encode(data: CborNegativeInteger) {
-        writeType(MajorType.NEGATIVE_INTEGER, MINUS_ONE - data.value.abs())
+        writeType(MajorType.NEGATIVE_INTEGER, (MINUS_ONE - data.value).abs())
     }
 }
 

@@ -10,7 +10,6 @@ import dev.kryptonreborn.cbor.model.MajorType
 import dev.kryptonreborn.cbor.model.symbol
 import kotlinx.io.Sink
 
-
 abstract class BaseEncoder<T : CborElement>(
     protected val sink: Sink,
     protected val encoder: CborEncoder,
@@ -131,14 +130,14 @@ abstract class BaseEncoder<T : CborElement>(
                 val mask = (0xFF).toBigInteger()
                 writeBytes(
                     symbol.toByte(),
-                    length.shr(56).and(mask).byteValue(),
-                    length.shr(48).and(mask).byteValue(),
-                    length.shr(40).and(mask).byteValue(),
-                    length.shr(32).and(mask).byteValue(),
-                    length.shr(24).and(mask).byteValue(),
-                    length.shr(16).and(mask).byteValue(),
-                    length.shr(8).and(mask).byteValue(),
-                    length.and(mask).byteValue()
+                    length.shr(56).and(mask).ubyteValue().toByte(),
+                    length.shr(48).and(mask).ubyteValue().toByte(),
+                    length.shr(40).and(mask).ubyteValue().toByte(),
+                    length.shr(32).and(mask).ubyteValue().toByte(),
+                    length.shr(24).and(mask).ubyteValue().toByte(),
+                    length.shr(16).and(mask).ubyteValue().toByte(),
+                    length.shr(8).and(mask).ubyteValue().toByte(),
+                    length.and(mask).ubyteValue().toByte()
                 )
             }
 

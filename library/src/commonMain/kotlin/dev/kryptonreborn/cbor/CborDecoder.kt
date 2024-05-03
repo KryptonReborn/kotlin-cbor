@@ -5,6 +5,7 @@ import dev.kryptonreborn.cbor.model.*
 import dev.kryptonreborn.cbor.model.MajorType.*
 import kotlinx.io.Buffer
 import kotlinx.io.Source
+import kotlinx.io.readUByte
 
 class CborDecoder(
     private val source: Source,
@@ -65,7 +66,7 @@ class CborDecoder(
     @Throws(CborException::class)
     fun decodeNext(): CborElement? {
         val symbol = try {
-            source.readByte().toInt()
+            source.readUByte().toInt()
         } catch (e: Exception) {
             return null
         }

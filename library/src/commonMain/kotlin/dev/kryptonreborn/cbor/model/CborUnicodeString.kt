@@ -18,8 +18,9 @@ data class CborUnicodeString(
     }
 
     override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + (string?.hashCode() ?: 0)
+        if (string == null) return 0
+        var result: Int = super.hashCode()
+        result = 31 * result + string.hashCode()
         return result
     }
 }
