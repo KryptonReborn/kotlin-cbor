@@ -69,8 +69,8 @@ class CommonMppLibPlugin : Plugin<Project> {
                     }
                     nativeMain.get().dependsOn(commonMain.get())
                     nativeTest.get().dependsOn(commonTest.get())
-                    iosMain.get().dependsOn(nativeMain.get())
-                    iosTest.get().dependsOn(nativeTest.get())
+                    iosMain.get().dependsOn(commonMain.get())
+                    iosTest.get().dependsOn(commonTest.get())
                 }
             }
         }
