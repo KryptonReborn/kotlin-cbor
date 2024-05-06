@@ -1,7 +1,5 @@
 package dev.kryptonreborn.cbor.model
 
-import dev.kryptonreborn.cbor.CborEncoder
-
 sealed class CborElement(
     val majorType: MajorType,
     var tag: CborTag? = null,
@@ -17,8 +15,6 @@ sealed class CborElement(
         }
         return element
     }
-
-    fun encodeToBytes(): ByteArray = CborEncoder.encodeToBytes(this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

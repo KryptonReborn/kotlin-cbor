@@ -7,6 +7,7 @@ import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.CborByteString
 import dev.kryptonreborn.cbor.model.CborElement
 import dev.kryptonreborn.cbor.model.MajorType
+import dev.kryptonreborn.cbor.model.encodeToBytes
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 import kotlin.test.Test
@@ -51,20 +52,24 @@ class CborByteStringDecoderTest {
     @Test
     fun shouldThrowOnIncompleteByteString() {
         val bytes = byteArrayOf(0x42, 0x20)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Error reading from input, the source is exhausted", it.message)
+        }
     }
 
     @Test
     fun shouldTrowOnMissingBreak() {
         val bytes = byteArrayOf(0x5f, 0x41, 0x20)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Unexpected end of stream", it.message)
+        }
     }
 
-
+    @Test
     fun decodingExample() {
         val bytes = byteArrayOf(0, 1, 2, 3)
         // Encode
-        val encodedBytes: ByteArray = CborByteString(bytes).bytes!!
+        val encodedBytes: ByteArray = CborByteString(bytes).encodeToBytes()
         // Decode
         val source: Source = Buffer().apply { write(encodedBytes) }
         val decoder = CborDecoder(source)

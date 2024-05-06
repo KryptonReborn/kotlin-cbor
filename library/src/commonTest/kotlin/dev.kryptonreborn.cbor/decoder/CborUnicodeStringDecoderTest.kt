@@ -28,12 +28,16 @@ class CborUnicodeStringDecoderTest {
     @Test
     fun shouldThrowOnIncompleteString() {
         val bytes = byteArrayOf(0x62, 0x61)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Error reading from input, the source is exhausted", it.message)
+        }
     }
 
     @Test
     fun shouldThrowOnMissingBreak() {
         val bytes = byteArrayOf(0x7f, 0x61, 0x61)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Unexpected end of stream", it.message)
+        }
     }
 }

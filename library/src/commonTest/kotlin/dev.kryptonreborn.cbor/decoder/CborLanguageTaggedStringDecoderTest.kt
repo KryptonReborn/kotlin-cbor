@@ -14,13 +14,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class CborLanguageTaggedStringDecoderTest {
-    // Unexpected end of stream, tag without data item
     @Test
     fun shouldThrowException() {
         val cborElement: List<CborElement> = CborBuilder().addTag(38).build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Unexpected end of stream: tag without following data item.", it.message)
+        }
     }
 
     @Test
@@ -28,7 +29,9 @@ class CborLanguageTaggedStringDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(38).add(true).build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding LanguageTaggedString: not an array", it.message)
+        }
     }
 
     @Test
@@ -36,7 +39,9 @@ class CborLanguageTaggedStringDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(38).addArray().add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding LanguageTaggedString: array size is not 2", it.message)
+        }
     }
 
     @Test
@@ -44,7 +49,9 @@ class CborLanguageTaggedStringDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(38).addArray().add(true).add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding LanguageTaggedString: first data item is not an UnicodeString", it.message)
+        }
     }
 
     @Test
@@ -52,7 +59,9 @@ class CborLanguageTaggedStringDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(38).addArray().add("en").add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding LanguageTaggedString: second data item is not an UnicodeString", it.message)
+        }
     }
 
     @Test

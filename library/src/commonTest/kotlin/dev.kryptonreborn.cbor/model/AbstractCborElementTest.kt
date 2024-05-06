@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.model
 
 import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborEncoder
 import kotlin.test.assertEquals
 
 abstract class AbstractCborElementTest {
@@ -10,3 +11,5 @@ abstract class AbstractCborElementTest {
         assertEquals(cborElement, decoded, message)
     }
 }
+
+fun CborElement.encodeToBytes(): ByteArray = CborEncoder.encodeToBytes(this)

@@ -48,6 +48,8 @@ class MajorTypeTest {
 
     @Test
     fun shouldReturnThrowOnInvalidByteValue() {
-        assertFailsWith<CborException> { MajorType.ofByte(-0x1) }
+        assertFailsWith<CborException> { MajorType.ofByte(-0x1) }.also {
+            assertEquals("Not implemented major type -1", it.message)
+        }
     }
 }

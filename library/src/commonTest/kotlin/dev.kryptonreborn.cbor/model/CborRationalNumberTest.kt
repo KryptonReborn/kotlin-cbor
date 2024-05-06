@@ -7,7 +7,14 @@ import kotlin.test.assertFailsWith
 class CborRationalNumberTest {
     @Test
     fun shouldThrowIfDenominatorIsZero() {
-        assertFailsWith<IllegalArgumentException> { CborRationalNumber(CborUnsignedInteger(1), CborUnsignedInteger(0)) }
+        assertFailsWith<IllegalArgumentException> {
+            CborRationalNumber(
+                CborUnsignedInteger(1),
+                CborUnsignedInteger(0)
+            )
+        }.also {
+            assertEquals("Denominator must be non-zero!", it.message)
+        }
     }
 
     @Test

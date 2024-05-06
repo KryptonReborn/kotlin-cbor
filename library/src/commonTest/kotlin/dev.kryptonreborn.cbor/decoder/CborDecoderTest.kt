@@ -49,7 +49,9 @@ class CborDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(30).add(true).build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding RationalNumber: not an array", it.message)
+        }
     }
 
     @Test
@@ -57,7 +59,9 @@ class CborDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(30).addArray().add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding RationalNumber: array size is not 2", it.message)
+        }
     }
 
     @Test
@@ -65,7 +69,9 @@ class CborDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(30).addArray().add(true).add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding RationalNumber: first data item is not a number", it.message)
+        }
     }
 
     @Test
@@ -73,7 +79,9 @@ class CborDecoderTest {
         val cborElement: List<CborElement> = CborBuilder().addTag(30).addArray().add(1).add(true).end().build()
         val source: Source = Buffer().apply { write(CborEncoder.encodeToBytes(cborElement)) }
         val decoder = CborDecoder(source)
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Error decoding RationalNumber: second data item is not a number", it.message)
+        }
     }
 
     @Test
@@ -86,7 +94,7 @@ class CborDecoderTest {
 
     @Test
     fun shouldDecodeTaggedTags() {
-        val decoded: CborElement = CborDecoder.decode(byteArrayOf(0xC1.toByte(), 0xC2.toByte(), 0x02)).get(0)
+        val decoded: CborElement = CborDecoder.decode(byteArrayOf(0xC1.toByte(), 0xC2.toByte(), 0x02))[0]
         val outer = CborTag(1)
         val inner = CborTag(2)
         val expected = CborUnsignedInteger(2)
@@ -109,10 +117,8 @@ class CborDecoderTest {
     @Test
     fun shouldThrowOnItemWithForgedLength() {
         val maliciousString = byteArrayOf(0x7a, 0x80.toByte(), 0x00, 0x00, 0x00)
-        try {
-            CborDecoder.decode(maliciousString)
-        } catch (e: CborException) {
-            assertTrue(e.message!!.contains("limited to INTMAX"), "Exception message")
+        assertFailsWith<CborException> { CborDecoder.decode(maliciousString) }.also {
+            assertEquals("Decoding fixed size items is limited to INTMAX", it.message)
         }
     }
 }

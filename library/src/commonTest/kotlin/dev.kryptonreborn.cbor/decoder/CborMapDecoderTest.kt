@@ -15,19 +15,25 @@ class CborMapDecoderTest {
     @Test
     fun shouldThrowOnMissingKeyInCborMap() {
         val bytes = byteArrayOf(0xa2.toByte(), 0x01, 0x02)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Unexpected end of stream", it.message)
+        }
     }
 
     @Test
     fun shouldThrowOnMissingValueInCborMap() {
         val bytes = byteArrayOf(0xa2.toByte(), 0x01, 0x02, 0x03)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Unexpected end of stream", it.message)
+        }
     }
 
     @Test
     fun shouldThrowOnIncompleteIndefiniteLengthCborMap() {
         val bytes = byteArrayOf(0xbf.toByte(), 0x61, 0x01)
-        assertFailsWith<CborException> { CborDecoder.decode(bytes) }
+        assertFailsWith<CborException> { CborDecoder.decode(bytes) }.also {
+            assertEquals("Unexpected end of stream", it.message)
+        }
     }
 
     @Test
@@ -45,7 +51,9 @@ class CborMapDecoderTest {
         val source: Source = Buffer().apply { write(bytes) }
         val decoder = CborDecoder(source)
         decoder.rejectDuplicateKeys = true
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Duplicate key found in map", it.message)
+        }
     }
 
     @Test
@@ -54,6 +62,8 @@ class CborMapDecoderTest {
         val source: Source = Buffer().apply { write(bytes) }
         val decoder = CborDecoder(source)
         decoder.rejectDuplicateKeys = true
-        assertFailsWith<CborException> { decoder.decode() }
+        assertFailsWith<CborException> { decoder.decode() }.also {
+            assertEquals("Duplicate key found in map", it.message)
+        }
     }
 }

@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.model
 
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class CborNegativeIntegerTest : AbstractCborElementTest() {
@@ -20,6 +21,8 @@ class CborNegativeIntegerTest : AbstractCborElementTest() {
 
     @Test
     fun shouldNotAcceptPositiveValues() {
-        assertFailsWith<IllegalArgumentException> { CborNegativeInteger(0) }
+        assertFailsWith<IllegalArgumentException> { CborNegativeInteger(0) }.also {
+            assertEquals("value must be negative but was 0", it.message)
+        }
     }
 }

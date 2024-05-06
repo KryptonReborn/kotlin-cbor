@@ -20,7 +20,9 @@ class CborUnsignedIntegerTest : AbstractCborElementTest() {
 
     @Test
     fun shouldNotAcceptNegativeValues() {
-        assertFailsWith<IllegalArgumentException> { CborUnsignedInteger(-1) }
+        assertFailsWith<IllegalArgumentException> { CborUnsignedInteger(-1) }.also {
+            assertEquals("value must not be negative but was -1", it.message)
+        }
     }
 
     @Test
