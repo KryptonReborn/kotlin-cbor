@@ -72,13 +72,9 @@ class CommonMppLibPlugin : Plugin<Project> {
 
                 sourceSets.apply {
                     commonMain.get()
-                    commonTest.dependencies {
+                    commonTest.get().dependencies {
                         implementation(libs.findLibrary("kotlinTest").get())
                     }
-                    nativeMain.get().dependsOn(commonMain.get())
-                    nativeTest.get().dependsOn(commonTest.get())
-                    iosMain.get().dependsOn(nativeMain.get())
-                    iosTest.get().dependsOn(nativeTest.get())
                 }
             }
         }
