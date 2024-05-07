@@ -2,10 +2,12 @@ package plugins
 
 import com.android.build.gradle.LibraryExtension
 import extensions.libs
-import org.gradle.api.*
-import org.gradle.kotlin.dsl.*
+import org.gradle.api.JavaVersion
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsSubTargetDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
@@ -48,11 +50,11 @@ class CommonMppLibPlugin : Plugin<Project> {
                 js {
                     configureTargetsForJS()
                 }
-                @OptIn(ExperimentalWasmDsl::class)
-                wasmJs {
-                    configureTargetsForJS()
-                }
-//kotlinBignum does not yet support wasmWasi
+// waiting for wasm support in kotlinx resource https://github.com/goncalossilva/kotlinx-resources/issues/91
+//                @OptIn(ExperimentalWasmDsl::class)
+//                wasmJs {
+//                    configureTargetsForJS()
+//                }
 //                @OptIn(ExperimentalWasmDsl::class)
 //                wasmWasi {
 //                    nodejs()
