@@ -42,7 +42,7 @@ Add the following dependency to your build.gradle.kts file
 
 ```build.gradle.kts
 dependencies {
-    implementation("kotlin-cbor:[library name]:[library version]")
+    implementation("dev.kryptonreborn.cbor:cbor:[version]")
 }
 ```
 

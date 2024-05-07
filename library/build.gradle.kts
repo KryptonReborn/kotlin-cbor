@@ -9,7 +9,7 @@ plugins {
 
 publishConfig {
     url = "https://maven.pkg.github.com/KryptonReborn/kotlin-cbor"
-    groupId = "kryptonreborn"
+    groupId = "dev.kryptonreborn.cbor"
     artifactId = "cbor"
 }
 
