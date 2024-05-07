@@ -48,4 +48,4 @@ dependencies {
 
 ## Acknowledgements
 
-This library is inspired by [repo](url) by [user](url).
+This library is inspired by [cbor-java](https://github.com/c-rack/cbor-java) by [c-rack](https://github.com/c-rack).
