@@ -51,8 +51,8 @@ class ListCborElementTest1 : AbstractListCborElementTest(
         0x61, 0x72, 0xD9.toByte(), 0x01, 0x93.toByte(), 0xA2.toByte(), 0x61, 0x61, 0x61, 0x62,
         0xD9.toByte(), 0x01, 0x91.toByte(), 0x61, 0x63, 0xD9.toByte(), 0x01, 0x92.toByte(),
         0x61, 0x64, 0xD9.toByte(), 0x01, 0xF8.toByte(), 0x81.toByte(), 0xD9.toByte(), 0x01,
-        0xF7.toByte(), 0x61, 0x63
-    )
+        0xF7.toByte(), 0x61, 0x63,
+    ),
 )
 
 /**
@@ -63,8 +63,8 @@ class ListCborElementTest2 : AbstractListCborElementTest(
         .build(),
     byteArrayOf(
         0xbf.toByte(), 0x63, 0x46, 0x75, 0x6e, 0xf5.toByte(), 0x63,
-        0x41, 0x6d, 0x74, 0x21, 0xff.toByte()
-    )
+        0x41, 0x6d, 0x74, 0x21, 0xff.toByte(),
+    ),
 )
 
 /**
@@ -75,8 +75,8 @@ class ListCborElementTest3 : AbstractListCborElementTest(
         .end().build(),
     byteArrayOf(
         0x82.toByte(), 0x61, 0x61, 0xbf.toByte(), 0x61, 0x62, 0x61,
-        0x63, 0xff.toByte()
-    )
+        0x63, 0xff.toByte(),
+    ),
 )
 
 /**
@@ -87,8 +87,8 @@ class ListCborElementTest4 : AbstractListCborElementTest(
         .add(2).add(3).end().end().build(),
     byteArrayOf(
         0xbf.toByte(), 0x61, 0x61, 0x01, 0x61, 0x62, 0x9f.toByte(),
-        0x02, 0x03, 0xff.toByte(), 0xff.toByte()
-    )
+        0x02, 0x03, 0xff.toByte(), 0xff.toByte(),
+    ),
 )
 
 /**
@@ -103,8 +103,8 @@ class ListCborElementTest5 : AbstractListCborElementTest(
     byteArrayOf(
         0x9f.toByte(), 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
         0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x18,
-        0x18, 0x19, 0xff.toByte()
-    )
+        0x18, 0x19, 0xff.toByte(),
+    ),
 )
 
 /**
@@ -115,8 +115,8 @@ class ListCborElementTest6 : AbstractListCborElementTest(
         .addArray().add(4).add(5).end().end().build(),
     byteArrayOf(
         0x83.toByte(), 0x01, 0x9f.toByte(), 0x02, 0x03, 0xff.toByte(),
-        0x82.toByte(), 0x04, 0x05
-    )
+        0x82.toByte(), 0x04, 0x05,
+    ),
 )
 
 /**
@@ -127,8 +127,8 @@ class ListCborElementTest7 : AbstractListCborElementTest(
         .startArray().add(4).add(5).end().end().build(),
     byteArrayOf(
         0x83.toByte(), 0x01, 0x82.toByte(), 0x02, 0x03, 0x9f.toByte(),
-        0x04, 0x05, 0xff.toByte()
-    )
+        0x04, 0x05, 0xff.toByte(),
+    ),
 )
 
 /**
@@ -139,9 +139,9 @@ class ListCborElementTest8 : AbstractListCborElementTest(
         .add(2).add(3).end().addArray().add(4).add(5).end().add(CborBreak).build(),
     byteArrayOf(
         0x9f.toByte(), 0x01, 0x82.toByte(), 0x02, 0x03, 0x82.toByte(),
-        0x04, 0x05, 0xff.toByte()
+        0x04, 0x05, 0xff.toByte(),
     ),
-    false
+    false,
 )
 
 /**
@@ -153,9 +153,9 @@ class ListCborElementTest9 : AbstractListCborElementTest(
         .add(2).add(3).end().addArray().add(4).add(5).end().add(CborBreak).build(),
     byteArrayOf(
         0x9f.toByte(), 0x01, 0x82.toByte(), 0x02, 0x03, 0x82.toByte(),
-        0x04, 0x05, 0xff.toByte()
+        0x04, 0x05, 0xff.toByte(),
     ),
-    false
+    false,
 )
 
 /**
@@ -165,7 +165,7 @@ class ListCborElementTest10 : AbstractListCborElementTest(
     CborBuilder().add(CborArray().apply { chunked = true })
         .add(CborBreak).build(),
     byteArrayOf(0x9f.toByte(), 0xff.toByte()),
-    false
+    false,
 )
 
 /**
@@ -175,9 +175,9 @@ class ListCborElementTest11 : AbstractListCborElementTest(
     CborBuilder().startString().add("strea").add("ming").end().build(),
     byteArrayOf(
         0x7f, 0x65, 0x73, 0x74, 0x72, 0x65, 0x61, 0x64, 0x6d, 0x69,
-        0x6e, 0x67, 0xff.toByte()
+        0x6e, 0x67, 0xff.toByte(),
     ),
-    false
+    false,
 )
 
 /**
@@ -187,9 +187,15 @@ class ListCborElementTest12 : AbstractListCborElementTest(
     CborBuilder().addArray().add(1).addArray().add(2).add(3).end()
         .addArray().add(4).add(5).end().end().build(),
     byteArrayOf(
-        0x83.toByte(), 0x01, 0x82.toByte(), 0x02, 0x03, 0x82.toByte(),
-        0x04, 0x05
-    )
+        0x83.toByte(),
+        0x01,
+        0x82.toByte(),
+        0x02,
+        0x03,
+        0x82.toByte(),
+        0x04,
+        0x05,
+    ),
 )
 
 /**
@@ -203,8 +209,8 @@ class ListCborElementTest13 : AbstractListCborElementTest(
     byteArrayOf(
         0x98.toByte(), 0x19, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
         0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18,
-        0x18, 0x18, 0x19
-    )
+        0x18, 0x18, 0x19,
+    ),
 )
 
 /**
@@ -212,7 +218,7 @@ class ListCborElementTest13 : AbstractListCborElementTest(
  */
 class ListCborElementTest14 : AbstractListCborElementTest(
     CborBuilder().addMap().end().build(),
-    byteArrayOf(0xa0.toByte())
+    byteArrayOf(0xa0.toByte()),
 )
 
 /**
@@ -220,7 +226,7 @@ class ListCborElementTest14 : AbstractListCborElementTest(
  */
 class ListCborElementTest15 : AbstractListCborElementTest(
     CborBuilder().addMap().put(1, 2).put(3, 4).end().build(),
-    byteArrayOf(0xa2.toByte(), 0x01, 0x02, 0x03, 0x04)
+    byteArrayOf(0xa2.toByte(), 0x01, 0x02, 0x03, 0x04),
 )
 
 /**
@@ -231,8 +237,8 @@ class ListCborElementTest16 : AbstractListCborElementTest(
         .end().build(),
     byteArrayOf(
         0xa2.toByte(), 0x61, 0x61, 0x01, 0x61, 0x62, 0x82.toByte(),
-        0x02, 0x03
-    )
+        0x02, 0x03,
+    ),
 )
 
 /**
@@ -242,9 +248,15 @@ class ListCborElementTest17 : AbstractListCborElementTest(
     CborBuilder().addArray().add("a").addMap().put("b", "c").end().end()
         .build(),
     byteArrayOf(
-        0x82.toByte(), 0x61, 0x61, 0xa1.toByte(), 0x61, 0x62, 0x61,
-        0x63
-    )
+        0x82.toByte(),
+        0x61,
+        0x61,
+        0xa1.toByte(),
+        0x61,
+        0x62,
+        0x61,
+        0x63,
+    ),
 )
 
 /**
@@ -256,8 +268,8 @@ class ListCborElementTest18 : AbstractListCborElementTest(
         .put("d", "D").put("e", "E").end().build(),
     byteArrayOf(
         0xa5.toByte(), 0x61, 0x61, 0x61, 0x41, 0x61, 0x62, 0x61,
-        0x42, 0x61, 0x63, 0x61, 0x43, 0x61, 0x64, 0x61, 0x44, 0x61, 0x65, 0x61, 0x45
-    )
+        0x42, 0x61, 0x63, 0x61, 0x43, 0x61, 0x64, 0x61, 0x44, 0x61, 0x65, 0x61, 0x45,
+    ),
 )
 
 /**
@@ -268,9 +280,9 @@ class ListCborElementTest19 : AbstractListCborElementTest(
         .add(byteArrayOf(0x03, 0x04, 0x05)).end().build(),
     byteArrayOf(
         0x5f, 0x42, 0x01, 0x02, 0x43, 0x03, 0x04, 0x05,
-        0xff.toByte()
+        0xff.toByte(),
     ),
-    false
+    false,
 )
 
 /**
@@ -280,8 +292,8 @@ class ListCborElementTest20 : AbstractListCborElementTest(
     CborBuilder().add(CborDoublePrecisionFloat(1363896240.5).apply { tag = CborTag(1) }).build(),
     byteArrayOf(
         0xc1.toByte(), 0xfb.toByte(), 0x41, 0xd4.toByte(), 0x52, 0xd9.toByte(),
-        0xec.toByte(), 0x20, 0x00, 0x00
-    )
+        0xec.toByte(), 0x20, 0x00, 0x00,
+    ),
 )
 
 /**
@@ -289,7 +301,7 @@ class ListCborElementTest20 : AbstractListCborElementTest(
  */
 class ListCborElementTest21 : AbstractListCborElementTest(
     CborBuilder().add(CborByteString(byteArrayOf(0x01, 0x02, 0x03, 0x04)).apply { tag = CborTag(23) }).build(),
-    byteArrayOf(0xd7.toByte(), 0x44, 0x01, 0x02, 0x03, 0x04)
+    byteArrayOf(0xd7.toByte(), 0x44, 0x01, 0x02, 0x03, 0x04),
 )
 
 /**
@@ -297,7 +309,7 @@ class ListCborElementTest21 : AbstractListCborElementTest(
  */
 class ListCborElementTest22 : AbstractListCborElementTest(
     CborBuilder().add(CborByteString(byteArrayOf(0x64, 0x49, 0x45, 0x54, 0x46)).apply { tag = CborTag(24) }).build(),
-    byteArrayOf(0xd8.toByte(), 0x18, 0x45, 0x64, 0x49, 0x45, 0x54, 0x46)
+    byteArrayOf(0xd8.toByte(), 0x18, 0x45, 0x64, 0x49, 0x45, 0x54, 0x46),
 )
 
 /**
@@ -305,7 +317,7 @@ class ListCborElementTest22 : AbstractListCborElementTest(
  */
 class ListCborElementTest23 : AbstractListCborElementTest(
     CborBuilder().add(CborUnsignedInteger(1363896240).apply { tag = CborTag(1) }).build(),
-    byteArrayOf(0xc1.toByte(), 0x1a, 0x51, 0x4b, 0x67, 0xb0.toByte())
+    byteArrayOf(0xc1.toByte(), 0x1a, 0x51, 0x4b, 0x67, 0xb0.toByte()),
 )
 
 /**
@@ -315,8 +327,8 @@ class ListCborElementTest24 : AbstractListCborElementTest(
     CborBuilder().add(CborUnicodeString("2013-03-21T20:04:00Z").apply { tag = CborTag(0) }).build(),
     byteArrayOf(
         0xc0.toByte(), 0x74, 0x32, 0x30, 0x31, 0x33, 0x2d, 0x30, 0x33, 0x2d,
-        0x32, 0x31, 0x54, 0x32, 0x30, 0x3a, 0x30, 0x34, 0x3a, 0x30, 0x30, 0x5a
-    )
+        0x32, 0x31, 0x54, 0x32, 0x30, 0x3a, 0x30, 0x34, 0x3a, 0x30, 0x30, 0x5a,
+    ),
 )
 
 /**
@@ -328,8 +340,8 @@ class ListCborElementTest25 : AbstractListCborElementTest(
     CborBuilder().add(CborUnicodeString("http://www.example.com").apply { tag = CborTag(32) }).build(),
     byteArrayOf(
         0xd8.toByte(), 0x20, 0x76, 0x68, 0x74, 0x74, 0x70, 0x3a, 0x2f, 0x2f,
-        0x77, 0x77, 0x77, 0x2e, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d
-    )
+        0x77, 0x77, 0x77, 0x2e, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d,
+    ),
 )
 
 /**
@@ -337,7 +349,7 @@ class ListCborElementTest25 : AbstractListCborElementTest(
  */
 class ListCborElementTest26 : AbstractListCborElementTest(
     CborBuilder().addArray().end().build(),
-    byteArrayOf(0x80.toByte())
+    byteArrayOf(0x80.toByte()),
 )
 
 /**
@@ -345,5 +357,5 @@ class ListCborElementTest26 : AbstractListCborElementTest(
  */
 class ListCborElementTest27 : AbstractListCborElementTest(
     CborBuilder().addArray().add(1).add(2).add(3).end().build(),
-    byteArrayOf(0x83.toByte(), 0x01, 0x02, 0x03)
+    byteArrayOf(0x83.toByte(), 0x01, 0x02, 0x03),
 )

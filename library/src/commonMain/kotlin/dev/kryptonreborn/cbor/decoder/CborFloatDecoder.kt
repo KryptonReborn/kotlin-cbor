@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.CborDoublePrecisionFloat
 import dev.kryptonreborn.cbor.model.CborHalfPrecisionFloat
 import dev.kryptonreborn.cbor.model.CborSinglePrecisionFloat
@@ -11,7 +12,6 @@ class CborHalfPrecisionFloatDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborHalfPrecisionFloat>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborHalfPrecisionFloat {
         val symbols = nextSymbols(2)
@@ -41,7 +41,6 @@ class CborSinglePrecisionFloatDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborSinglePrecisionFloat>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborSinglePrecisionFloat {
         var bits = 0
@@ -61,7 +60,6 @@ class CborDoublePrecisionFloatDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborDoublePrecisionFloat>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborDoublePrecisionFloat {
         var bits: Long = 0

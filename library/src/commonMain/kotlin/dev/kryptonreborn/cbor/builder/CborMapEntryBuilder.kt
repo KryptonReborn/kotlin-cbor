@@ -16,12 +16,16 @@ class CborMapEntryBuilder<T : CborMapBuilder<*>>(
 
     fun value(value: String?): T = put(key, value.toCborElement())
 
-    private fun put(key: CborElement, value: CborElement): T {
+    private fun put(
+        key: CborElement,
+        value: CborElement,
+    ): T {
         parent!!.put(key, value)
         return parent
     }
 
-    fun tagged(tag: Long): CborMapEntryBuilder<T> = this.apply {
-        key.getOuterTaggable().tag = tag.asCborTag()
-    }
+    fun tagged(tag: Long): CborMapEntryBuilder<T> =
+        this.apply {
+            key.getOuterTaggable().tag = tag.asCborTag()
+        }
 }

@@ -1,12 +1,27 @@
 package dev.kryptonreborn.cbor
 
-import dev.kryptonreborn.cbor.model.MajorType.*
-import dev.kryptonreborn.cbor.encoder.*
-import dev.kryptonreborn.cbor.model.*
+import dev.kryptonreborn.cbor.encoder.CborArrayEncoder
+import dev.kryptonreborn.cbor.encoder.CborByteStringEncoder
+import dev.kryptonreborn.cbor.encoder.CborMapEncoder
+import dev.kryptonreborn.cbor.encoder.CborNegativeIntegerEncoder
+import dev.kryptonreborn.cbor.encoder.CborSpecialElementEncoder
+import dev.kryptonreborn.cbor.encoder.CborTagEncoder
+import dev.kryptonreborn.cbor.encoder.CborUnicodeStringEncoder
+import dev.kryptonreborn.cbor.encoder.CborUnsignedIntegerEncoder
+import dev.kryptonreborn.cbor.model.CborArray
+import dev.kryptonreborn.cbor.model.CborByteString
+import dev.kryptonreborn.cbor.model.CborElement
+import dev.kryptonreborn.cbor.model.CborMap
+import dev.kryptonreborn.cbor.model.CborNegativeInteger
+import dev.kryptonreborn.cbor.model.CborNull
+import dev.kryptonreborn.cbor.model.CborSpecialElement
+import dev.kryptonreborn.cbor.model.CborTag
+import dev.kryptonreborn.cbor.model.CborUnicodeString
+import dev.kryptonreborn.cbor.model.CborUnsignedInteger
+import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Buffer
 import kotlinx.io.Sink
 import kotlinx.io.readByteArray
-
 
 class CborEncoder(
     sink: Sink,
@@ -83,14 +98,14 @@ class CborEncoder(
         }
 
         when (encodingData.majorType) {
-            UNSIGNED_INTEGER -> unsignedIntegerEncoder.encode(encodingData as CborUnsignedInteger)
-            NEGATIVE_INTEGER -> negativeIntegerEncoder.encode(encodingData as CborNegativeInteger)
-            BYTE_STRING -> byteStringEncoder.encode(encodingData as CborByteString)
-            UNICODE_STRING -> unicodeStringEncoder.encode(encodingData as CborUnicodeString)
-            ARRAY -> arrayEncoder.encode(encodingData as CborArray)
-            MAP -> mapEncoder.encode(encodingData as CborMap)
-            SPECIAL -> specialElementEncoder.encode(encodingData as CborSpecialElement)
-            TAG -> tagEncoder.encode(encodingData as CborTag)
+            MajorType.UNSIGNED_INTEGER -> unsignedIntegerEncoder.encode(encodingData as CborUnsignedInteger)
+            MajorType.NEGATIVE_INTEGER -> negativeIntegerEncoder.encode(encodingData as CborNegativeInteger)
+            MajorType.BYTE_STRING -> byteStringEncoder.encode(encodingData as CborByteString)
+            MajorType.UNICODE_STRING -> unicodeStringEncoder.encode(encodingData as CborUnicodeString)
+            MajorType.ARRAY -> arrayEncoder.encode(encodingData as CborArray)
+            MajorType.MAP -> mapEncoder.encode(encodingData as CborMap)
+            MajorType.SPECIAL -> specialElementEncoder.encode(encodingData as CborSpecialElement)
+            MajorType.TAG -> tagEncoder.encode(encodingData as CborTag)
         }
     }
 }

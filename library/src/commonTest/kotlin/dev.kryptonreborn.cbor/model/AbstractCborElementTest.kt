@@ -5,7 +5,10 @@ import dev.kryptonreborn.cbor.CborEncoder
 import kotlin.test.assertEquals
 
 abstract class AbstractCborElementTest {
-    protected fun shouldEncodeAndDecode(message: String, cborElement: CborElement) {
+    protected fun shouldEncodeAndDecode(
+        message: String,
+        cborElement: CborElement,
+    ) {
         val bytes: ByteArray = cborElement.encodeToBytes()
         val decoded: CborElement = CborDecoder.decode(bytes)[0]
         assertEquals(cborElement, decoded, message)

@@ -18,10 +18,11 @@ import kotlin.test.assertNotNull
 class CborByteStringDecoderTest {
     @Test
     fun shouldDecodeChunkedByteString() {
-        val encodedBytes: ByteArray = CborEncoder.encodeToBytes(
-            CborBuilder().startByteString()
-                .add(byteArrayOf('\u0000'.code.toByte())).add(byteArrayOf(0x10)).add(byteArrayOf(0x13)).end().build()
-        )
+        val encodedBytes: ByteArray =
+            CborEncoder.encodeToBytes(
+                CborBuilder().startByteString()
+                    .add(byteArrayOf('\u0000'.code.toByte())).add(byteArrayOf(0x10)).add(byteArrayOf(0x13)).end().build(),
+            )
         val source: Source = Buffer().apply { write(encodedBytes) }
         val decoder = CborDecoder(source)
         val cborElements: List<CborElement> = decoder.decode()

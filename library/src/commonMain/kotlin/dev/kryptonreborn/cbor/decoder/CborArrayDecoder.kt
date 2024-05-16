@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.CborArray
 import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.model.CborElement
@@ -10,7 +11,6 @@ class CborArrayDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborArray>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborArray {
         val length = getLength(initialByte)
@@ -23,9 +23,10 @@ class CborArrayDecoder(
 
     @Throws(CborException::class)
     private fun decodeInfinitiveLength(): CborArray {
-        val array = CborArray().apply {
-            chunked = true
-        }
+        val array =
+            CborArray().apply {
+                chunked = true
+            }
 
         if (decoder.autoDecodeInfinitiveArrays) {
             var item: CborElement

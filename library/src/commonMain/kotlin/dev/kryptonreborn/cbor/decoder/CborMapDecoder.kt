@@ -1,8 +1,8 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.CborDecoder
 import dev.kryptonreborn.cbor.CborException
+import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.model.CborMap
 import kotlinx.io.Source
 
@@ -10,7 +10,6 @@ class CborMapDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborMap>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborMap {
         val length = getLength(initialByte)
@@ -23,9 +22,10 @@ class CborMapDecoder(
 
     @Throws(CborException::class)
     private fun decodeInfinitiveLength(): CborMap {
-        val map = CborMap().apply {
-            chunked = true
-        }
+        val map =
+            CborMap().apply {
+                chunked = true
+            }
         if (decoder.autoDecodeInfinitiveMaps) {
             while (true) {
                 val key = decoder.decodeNext() ?: throw CborException("Unexpected end of stream")

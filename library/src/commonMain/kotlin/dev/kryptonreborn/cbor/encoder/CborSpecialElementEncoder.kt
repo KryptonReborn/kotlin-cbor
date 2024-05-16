@@ -1,9 +1,13 @@
 package dev.kryptonreborn.cbor.encoder
 
 import dev.kryptonreborn.cbor.CborEncoder
-import dev.kryptonreborn.cbor.model.*
-import dev.kryptonreborn.cbor.model.SimpleValueType.*
-import dev.kryptonreborn.cbor.model.SpecialType.*
+import dev.kryptonreborn.cbor.model.CborDoublePrecisionFloat
+import dev.kryptonreborn.cbor.model.CborHalfPrecisionFloat
+import dev.kryptonreborn.cbor.model.CborSimpleValue
+import dev.kryptonreborn.cbor.model.CborSinglePrecisionFloat
+import dev.kryptonreborn.cbor.model.CborSpecialElement
+import dev.kryptonreborn.cbor.model.SimpleValueType
+import dev.kryptonreborn.cbor.model.SpecialType
 import kotlinx.io.Sink
 
 class CborSpecialElementEncoder(
@@ -16,29 +20,32 @@ class CborSpecialElementEncoder(
 
     override fun encode(data: CborSpecialElement) {
         when (data.specialType) {
-            BREAK -> writeBytes(
-                ((7 shl 5) or 31).toByte()
-            )
+            SpecialType.BREAK ->
+                writeBytes(
+                    ((7 shl 5) or 31).toByte(),
+                )
 
-            SIMPLE_VALUE -> {
+            SpecialType.SIMPLE_VALUE -> {
                 val simpleValue = data as CborSimpleValue
                 when (simpleValue.simpleValueType) {
-                    FALSE, NULL, TRUE, UNDEFINED -> writeBytes(
-                        ((7 shl 5) or simpleValue.simpleValueType.value).toByte(),
-                    )
+                    SimpleValueType.FALSE, SimpleValueType.NULL, SimpleValueType.TRUE, SimpleValueType.UNDEFINED ->
+                        writeBytes(
+                            ((7 shl 5) or simpleValue.simpleValueType.value).toByte(),
+                        )
 
-                    UNALLOCATED -> writeBytes(
-                        ((7 shl 5) or simpleValue.value).toByte(),
-                    )
+                    SimpleValueType.UNALLOCATED ->
+                        writeBytes(
+                            ((7 shl 5) or simpleValue.value).toByte(),
+                        )
 
-                    RESERVED -> {}
+                    SimpleValueType.RESERVED -> {}
                 }
             }
 
-            IEEE_754_HALF_PRECISION_FLOAT -> halfPrecisionFloatEncoder.encode(data as CborHalfPrecisionFloat)
-            IEEE_754_SINGLE_PRECISION_FLOAT -> singlePrecisionFloatEncoder.encode(data as CborSinglePrecisionFloat)
-            IEEE_754_DOUBLE_PRECISION_FLOAT -> doublePrecisionFloatEncoder.encode(data as CborDoublePrecisionFloat)
-            SIMPLE_VALUE_NEXT_BYTE -> {
+            SpecialType.IEEE_754_HALF_PRECISION_FLOAT -> halfPrecisionFloatEncoder.encode(data as CborHalfPrecisionFloat)
+            SpecialType.IEEE_754_SINGLE_PRECISION_FLOAT -> singlePrecisionFloatEncoder.encode(data as CborSinglePrecisionFloat)
+            SpecialType.IEEE_754_DOUBLE_PRECISION_FLOAT -> doublePrecisionFloatEncoder.encode(data as CborDoublePrecisionFloat)
+            SpecialType.SIMPLE_VALUE_NEXT_BYTE -> {
                 val simpleValueNextByte = data as CborSimpleValue
                 writeBytes(
                     ((7 shl 5) or 24).toByte(),

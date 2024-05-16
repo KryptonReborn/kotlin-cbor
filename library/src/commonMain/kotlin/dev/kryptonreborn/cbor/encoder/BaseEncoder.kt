@@ -2,10 +2,10 @@ package dev.kryptonreborn.cbor.encoder
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.toBigInteger
-import dev.kryptonreborn.cbor.model.AdditionalInformation.*
-import dev.kryptonreborn.cbor.model.CborElement
 import dev.kryptonreborn.cbor.CborEncoder
 import dev.kryptonreborn.cbor.CborException
+import dev.kryptonreborn.cbor.model.AdditionalInformation
+import dev.kryptonreborn.cbor.model.CborElement
 import dev.kryptonreborn.cbor.model.MajorType
 import dev.kryptonreborn.cbor.model.symbol
 import kotlinx.io.Sink
@@ -25,22 +25,25 @@ abstract class BaseEncoder<T : CborElement>(
     @Throws(CborException::class)
     protected fun writeIndefiniteLengthType(majorType: MajorType) {
         var symbol = majorType.symbol
-        symbol = symbol or INDEFINITE.value
+        symbol = symbol or AdditionalInformation.INDEFINITE.value
         writeBytes(symbol.toByte())
     }
 
     @Throws(CborException::class)
-    protected fun writeType(majorType: MajorType, length: Long) {
+    protected fun writeType(
+        majorType: MajorType,
+        length: Long,
+    ) {
         var symbol = majorType.symbol
         when {
             length <= 23L -> {
                 writeBytes(
-                    (symbol.toLong() or length).toByte()
+                    (symbol.toLong() or length).toByte(),
                 )
             }
 
             length <= 255L -> {
-                symbol = symbol or ONE_BYTE.value
+                symbol = symbol or AdditionalInformation.ONE_BYTE.value
                 writeBytes(
                     symbol.toByte(),
                     length.toByte(),
@@ -48,7 +51,7 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             length <= 65535L -> {
-                symbol = symbol or TWO_BYTES.value
+                symbol = symbol or AdditionalInformation.TWO_BYTES.value
                 writeBytes(
                     symbol.toByte(),
                     (length shr 8).toByte(),
@@ -57,7 +60,7 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             length <= 4294967295L -> {
-                symbol = symbol or FOUR_BYTES.value
+                symbol = symbol or AdditionalInformation.FOUR_BYTES.value
                 writeBytes(
                     symbol.toByte(),
                     ((length shr 24) and 0xFFL).toByte(),
@@ -68,7 +71,7 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             else -> {
-                symbol = symbol or EIGHT_BYTES.value
+                symbol = symbol or AdditionalInformation.EIGHT_BYTES.value
                 writeBytes(
                     symbol.toByte(),
                     ((length shr 56) and 0xFFL).toByte(),
@@ -85,7 +88,10 @@ abstract class BaseEncoder<T : CborElement>(
     }
 
     @Throws(CborException::class)
-    protected fun writeType(majorType: MajorType, length: BigInteger) {
+    protected fun writeType(
+        majorType: MajorType,
+        length: BigInteger,
+    ) {
         val negative = majorType === MajorType.NEGATIVE_INTEGER
         var symbol = majorType.symbol
         when {
@@ -96,7 +102,7 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             length < 256.toBigInteger() -> {
-                symbol = symbol or ONE_BYTE.value
+                symbol = symbol or AdditionalInformation.ONE_BYTE.value
                 writeBytes(
                     symbol.toByte(),
                     length.intValue().toByte(),
@@ -104,7 +110,7 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             length < 65536L.toBigInteger() -> {
-                symbol = symbol or TWO_BYTES.value
+                symbol = symbol or AdditionalInformation.TWO_BYTES.value
                 val twoByteValue = length.longValue()
                 writeBytes(
                     symbol.toByte(),
@@ -114,19 +120,19 @@ abstract class BaseEncoder<T : CborElement>(
             }
 
             length < 4294967296L.toBigInteger() -> {
-                symbol = symbol or FOUR_BYTES.value
+                symbol = symbol or AdditionalInformation.FOUR_BYTES.value
                 val fourByteValue = length.longValue()
                 writeBytes(
                     symbol.toByte(),
                     ((fourByteValue shr 24) and 0xFFL).toByte(),
                     ((fourByteValue shr 16) and 0xFFL).toByte(),
                     ((fourByteValue shr 8) and 0xFFL).toByte(),
-                    (fourByteValue and 0xFFL).toByte()
+                    (fourByteValue and 0xFFL).toByte(),
                 )
             }
 
             length < UINT64_MAX_PLUS_ONE -> {
-                symbol = symbol or EIGHT_BYTES.value
+                symbol = symbol or AdditionalInformation.EIGHT_BYTES.value
                 val mask = (0xFF).toBigInteger()
                 writeBytes(
                     symbol.toByte(),
@@ -137,7 +143,7 @@ abstract class BaseEncoder<T : CborElement>(
                     length.shr(24).and(mask).ubyteValue().toByte(),
                     length.shr(16).and(mask).ubyteValue().toByte(),
                     length.shr(8).and(mask).ubyteValue().toByte(),
-                    length.and(mask).ubyteValue().toByte()
+                    length.and(mask).ubyteValue().toByte(),
                 )
             }
 
@@ -160,7 +166,8 @@ abstract class BaseEncoder<T : CborElement>(
             sink.write(bytes)
         } catch (e: IndexOutOfBoundsException) {
             throw CborException(
-                "Error writing to output, startIndex or endIndex is out of range of source array indices.", e
+                "Error writing to output, startIndex or endIndex is out of range of source array indices.",
+                e,
             )
         } catch (e: IllegalArgumentException) {
             throw CborException("Error writing to output, startIndex > endInde.", e)

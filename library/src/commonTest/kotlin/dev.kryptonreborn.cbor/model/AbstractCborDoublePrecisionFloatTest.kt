@@ -32,10 +32,11 @@ abstract class AbstractCborDoublePrecisionFloatTest(private val value: Double, p
  * 1.1 -> 0xfb 3f f1 99 99 99 99 99 9a
  */
 class CborDoublePrecisionFloatTest1 : AbstractCborDoublePrecisionFloatTest(
-    1.1, byteArrayOf(
+    1.1,
+    byteArrayOf(
         0xfb.toByte(), 0x3f, 0xf1.toByte(), 0x99.toByte(), 0x99.toByte(), 0x99.toByte(), 0x99.toByte(),
-        0x99.toByte(), 0x9a.toByte()
-    )
+        0x99.toByte(), 0x9a.toByte(),
+    ),
 )
 
 /**
@@ -43,7 +44,7 @@ class CborDoublePrecisionFloatTest1 : AbstractCborDoublePrecisionFloatTest(
  */
 class CborDoublePrecisionFloatTest2 : AbstractCborDoublePrecisionFloatTest(
     "1.0e+300".toDouble(),
-    byteArrayOf(0xfb.toByte(), 0x7e, 0x37, 0xe4.toByte(), 0x3c, 0x88.toByte(), 0x00, 0x75, 0x9c.toByte())
+    byteArrayOf(0xfb.toByte(), 0x7e, 0x37, 0xe4.toByte(), 0x3c, 0x88.toByte(), 0x00, 0x75, 0x9c.toByte()),
 )
 
 /**
@@ -51,7 +52,7 @@ class CborDoublePrecisionFloatTest2 : AbstractCborDoublePrecisionFloatTest(
  */
 class CborDoublePrecisionFloatTest3 : AbstractCborDoublePrecisionFloatTest(
     "-4.1".toDouble(),
-    byteArrayOf(0xfb.toByte(), 0xc0.toByte(), 0x10, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66)
+    byteArrayOf(0xfb.toByte(), 0xc0.toByte(), 0x10, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66),
 )
 
 /**
@@ -59,7 +60,7 @@ class CborDoublePrecisionFloatTest3 : AbstractCborDoublePrecisionFloatTest(
  */
 class CborDoublePrecisionFloatTest4 : AbstractCborDoublePrecisionFloatTest(
     Double.POSITIVE_INFINITY,
-    byteArrayOf(0xfb.toByte(), 0x7f, 0xf0.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+    byteArrayOf(0xfb.toByte(), 0x7f, 0xf0.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
 )
 
 /**
@@ -67,7 +68,7 @@ class CborDoublePrecisionFloatTest4 : AbstractCborDoublePrecisionFloatTest(
  */
 class CborDoublePrecisionFloatTest5 : AbstractCborDoublePrecisionFloatTest(
     Double.NaN,
-    byteArrayOf(0xfb.toByte(), 0x7f, 0xf8.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+    byteArrayOf(0xfb.toByte(), 0x7f, 0xf8.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
 )
 
 /**
@@ -75,5 +76,5 @@ class CborDoublePrecisionFloatTest5 : AbstractCborDoublePrecisionFloatTest(
  */
 class CborDoublePrecisionFloatTest6 : AbstractCborDoublePrecisionFloatTest(
     Double.NEGATIVE_INFINITY,
-    byteArrayOf(0xfb.toByte(), 0xff.toByte(), 0xf0.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
+    byteArrayOf(0xfb.toByte(), 0xff.toByte(), 0xf0.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
 )

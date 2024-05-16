@@ -10,7 +10,7 @@ class CborRationalNumberTest {
         assertFailsWith<IllegalArgumentException> {
             CborRationalNumber(
                 CborUnsignedInteger(1),
-                CborUnsignedInteger(0)
+                CborUnsignedInteger(0),
             )
         }.also {
             assertEquals("Denominator must be non-zero!", it.message)

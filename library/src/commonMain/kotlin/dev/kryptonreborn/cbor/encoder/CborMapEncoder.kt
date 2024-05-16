@@ -1,7 +1,7 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.CborEncoder
+import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.model.CborMap
 import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Buffer
@@ -12,7 +12,6 @@ class CborMapEncoder(
     sink: Sink,
     cborEncoder: CborEncoder,
 ) : BaseEncoder<CborMap>(sink, cborEncoder) {
-
     override fun encode(data: CborMap) {
         if (data.chunked) {
             writeIndefiniteLengthType(MajorType.MAP)
@@ -34,7 +33,6 @@ class CborMapEncoder(
                 writeNonCanonicalMap(data)
             }
         }
-
     }
 
     private fun writeNonCanonicalMap(map: CborMap) {
@@ -65,28 +63,29 @@ class CborMapEncoder(
      * sorts earlier.
      */
     private fun writeCanonicalMap(map: CborMap) {
-        val comparator = object : Comparator<MutableMap.MutableEntry<ByteArray, ByteArray>> {
-            override fun compare(
-                a: MutableMap.MutableEntry<ByteArray, ByteArray>,
-                b: MutableMap.MutableEntry<ByteArray, ByteArray>
-            ): Int {
-                if (a.key.size < b.key.size) {
-                    return -1
-                }
-                if (a.key.size > b.key.size) {
-                    return 1
-                }
-                for (i in a.key.indices) {
-                    if (a.key[i] < b.key[i]) {
+        val comparator =
+            object : Comparator<MutableMap.MutableEntry<ByteArray, ByteArray>> {
+                override fun compare(
+                    a: MutableMap.MutableEntry<ByteArray, ByteArray>,
+                    b: MutableMap.MutableEntry<ByteArray, ByteArray>,
+                ): Int {
+                    if (a.key.size < b.key.size) {
                         return -1
                     }
-                    if (a.key[i] > b.key[i]) {
+                    if (a.key.size > b.key.size) {
                         return 1
                     }
+                    for (i in a.key.indices) {
+                        if (a.key[i] < b.key[i]) {
+                            return -1
+                        }
+                        if (a.key[i] > b.key[i]) {
+                            return 1
+                        }
+                    }
+                    return 0
                 }
-                return 0
             }
-        }
         val encodingMap = mutableMapOf<ByteArray, ByteArray>()
         val buffer = Buffer()
         val mapEncoder = CborEncoder(buffer)

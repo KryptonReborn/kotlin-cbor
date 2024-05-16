@@ -90,17 +90,18 @@ class CborNumberTest9 : AbstractCborNumberTest(1000000, byteArrayOf(0x1a, 0x00, 
  */
 class CborNumberTest10 : AbstractCborNumberTest(
     1000000000000L,
-    byteArrayOf(0x1b, 0x00, 0x00, 0x00, 0xe8.toByte(), 0xd4.toByte(), 0xa5.toByte(), 0x10, 0x00)
+    byteArrayOf(0x1b, 0x00, 0x00, 0x00, 0xe8.toByte(), 0xd4.toByte(), 0xa5.toByte(), 0x10, 0x00),
 )
 
 /**
  * 18446744073709551615 -> 0x1bffffffffffffffff
  */
 class CborNumberTest11 : AbstractCborNumberTest(
-    BigInteger.parseString("18446744073709551615"), byteArrayOf(
+    BigInteger.parseString("18446744073709551615"),
+    byteArrayOf(
         0x1b, 0xff.toByte(), 0xff.toByte(), 0xff.toByte(),
-        0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte()
-    )
+        0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(),
+    ),
 )
 
 /**
@@ -110,8 +111,8 @@ class CborNumberTest12 : AbstractCborNumberTest(
     BigInteger.parseString("-18446744073709551616"),
     byteArrayOf(
         0x3b.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(),
-        0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte()
-    )
+        0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(), 0xff.toByte(),
+    ),
 )
 
 /**

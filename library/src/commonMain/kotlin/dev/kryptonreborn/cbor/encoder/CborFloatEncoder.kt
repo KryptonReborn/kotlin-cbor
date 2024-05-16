@@ -1,7 +1,7 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.model.CborDoublePrecisionFloat
 import dev.kryptonreborn.cbor.CborEncoder
+import dev.kryptonreborn.cbor.model.CborDoublePrecisionFloat
 import dev.kryptonreborn.cbor.model.CborHalfPrecisionFloat
 import dev.kryptonreborn.cbor.model.CborSinglePrecisionFloat
 import kotlinx.io.Sink
@@ -28,15 +28,16 @@ class CborHalfPrecisionFloatEncoder(
         val fbits = fval.toBits()
         val sign = fbits ushr 16 and 0x8000 // sign only
         var roundedValue = 0x1000 + fbits and 0x7fffffff // rounded value
-        if (roundedValue >= 0x47800000) // might be or become NaN/Inf
-        { // avoid Inf due to rounding
+        // might be or become NaN/Inf
+        if (roundedValue >= 0x47800000) { // avoid Inf due to rounding
             if ((fbits and 0x7fffffff) >= 0x47800000) { // is or must become
                 // NaN/Inf
                 if (roundedValue < 0x7f800000) { // was value but too large
                     return sign or 0x7c00 // make it +/-Inf
                 }
                 return sign or 0x7c00 or ( // remains +/-Inf or NaN
-                        (fbits and 0x007fffff) ushr 13) // keep NaN (and
+                    (fbits and 0x007fffff) ushr 13
+                ) // keep NaN (and
                 // Inf) bits
             }
             return sign or 0x7bff // unrounded not quite Inf
@@ -48,9 +49,12 @@ class CborHalfPrecisionFloatEncoder(
             return sign // becomes +/-0
         }
         roundedValue = (fbits and 0x7fffffff) ushr 23 // tmp exp for subnormal calc
-        return sign or (((fbits and 0x7fffff or 0x800000) // add subnormal bit
-                + (0x800000 ushr roundedValue - 102) // round depending on cut off
-                ) ushr 126 - roundedValue) // div by 2^(1-(exp-127+15)) and >> 13 | exp=0
+        return sign or (
+            (
+                (fbits and 0x7fffff or 0x800000) + // add subnormal bit
+                    (0x800000 ushr roundedValue - 102) // round depending on cut off
+            ) ushr 126 - roundedValue
+        ) // div by 2^(1-(exp-127+15)) and >> 13 | exp=0
     }
 }
 

@@ -9,7 +9,6 @@ class CborTagDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborTag>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborTag {
         return CborTag(getLength(initialByte))

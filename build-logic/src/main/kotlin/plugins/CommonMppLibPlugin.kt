@@ -17,6 +17,7 @@ class CommonMppLibPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply(libs.findPlugin("androidLibrary").get().get().pluginId)
                 apply(libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
+                apply(libs.findPlugin("ktlint").get().get().pluginId)
             }
 
             extensions.configure<LibraryExtension> {
