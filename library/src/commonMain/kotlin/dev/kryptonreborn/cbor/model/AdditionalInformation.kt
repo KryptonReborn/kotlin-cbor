@@ -18,17 +18,19 @@ enum class AdditionalInformation(val value: Int) {
     FOUR_BYTES(26), // 26
     EIGHT_BYTES(27), // 27
     RESERVED(28), // 28-30
-    INDEFINITE(31); // 31
+    INDEFINITE(31), // 31
+    ;
 
     companion object {
-        fun ofByte(b: Int): AdditionalInformation = when (b and 31) {
-            24 -> ONE_BYTE
-            25 -> TWO_BYTES
-            26 -> FOUR_BYTES
-            27 -> EIGHT_BYTES
-            28, 29, 30 -> RESERVED
-            31 -> INDEFINITE
-            else -> DIRECT
-        }
+        fun ofByte(b: Int): AdditionalInformation =
+            when (b and 31) {
+                24 -> ONE_BYTE
+                25 -> TWO_BYTES
+                26 -> FOUR_BYTES
+                27 -> EIGHT_BYTES
+                28, 29, 30 -> RESERVED
+                31 -> INDEFINITE
+                else -> DIRECT
+            }
     }
 }

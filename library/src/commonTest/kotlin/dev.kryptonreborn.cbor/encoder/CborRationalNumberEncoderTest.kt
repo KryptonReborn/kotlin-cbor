@@ -1,7 +1,11 @@
 package dev.kryptonreborn.cbor.encoder
 
 import dev.kryptonreborn.cbor.CborDecoder
-import dev.kryptonreborn.cbor.model.*
+import dev.kryptonreborn.cbor.model.CborArray
+import dev.kryptonreborn.cbor.model.CborRationalNumber
+import dev.kryptonreborn.cbor.model.CborTag
+import dev.kryptonreborn.cbor.model.CborUnsignedInteger
+import dev.kryptonreborn.cbor.model.encodeToBytes
 import kotlinx.io.Buffer
 import kotlin.test.Test
 import kotlin.test.assertEquals

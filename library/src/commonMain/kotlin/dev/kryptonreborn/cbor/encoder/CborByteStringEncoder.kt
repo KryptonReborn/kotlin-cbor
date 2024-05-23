@@ -1,7 +1,7 @@
 package dev.kryptonreborn.cbor.encoder
 
-import dev.kryptonreborn.cbor.model.CborByteString
 import dev.kryptonreborn.cbor.CborEncoder
+import dev.kryptonreborn.cbor.model.CborByteString
 import dev.kryptonreborn.cbor.model.CborNull
 import dev.kryptonreborn.cbor.model.MajorType
 import kotlinx.io.Sink

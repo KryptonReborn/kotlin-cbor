@@ -11,7 +11,9 @@ data class CborByteString(
         if (bytes != null) {
             if (other.bytes == null) return false
             if (!bytes.contentEquals(other.bytes)) return false
-        } else if (other.bytes != null) return false
+        } else if (other.bytes != null) {
+            return false
+        }
 
         return true
     }

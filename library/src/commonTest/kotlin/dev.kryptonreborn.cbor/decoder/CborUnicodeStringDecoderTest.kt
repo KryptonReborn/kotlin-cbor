@@ -15,9 +15,10 @@ import kotlin.test.assertNotNull
 class CborUnicodeStringDecoderTest {
     @Test
     fun shouldDecodeChunkedUnicodeString() {
-        val encodedBytes: ByteArray = CborEncoder.encodeToBytes(
-            CborBuilder().startString().add("foo").add("bar").end().build()
-        )
+        val encodedBytes: ByteArray =
+            CborEncoder.encodeToBytes(
+                CborBuilder().startString().add("foo").add("bar").end().build(),
+            )
         val source: Source = Buffer().apply { write(encodedBytes) }
         val decoder = CborDecoder(source)
         val cborElements: List<CborElement> = decoder.decode()

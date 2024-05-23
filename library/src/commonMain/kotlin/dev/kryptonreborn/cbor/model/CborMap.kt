@@ -7,7 +7,10 @@ open class CborMap(
 
     fun values(): List<CborElement> = data.values.toList()
 
-    fun put(key: CborElement, value: CborElement): CborElement? = data.put(key, value)
+    fun put(
+        key: CborElement,
+        value: CborElement,
+    ): CborElement? = data.put(key, value)
 
     fun get(key: CborElement): CborElement? = data[key]
 

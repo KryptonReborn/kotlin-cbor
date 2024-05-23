@@ -1,6 +1,7 @@
 package dev.kryptonreborn.cbor.decoder
 
-import dev.kryptonreborn.cbor.*
+import dev.kryptonreborn.cbor.CborDecoder
+import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.CborBreak
 import dev.kryptonreborn.cbor.model.CborByteString
 import dev.kryptonreborn.cbor.model.MajorType
@@ -12,7 +13,6 @@ class CborByteStringDecoder(
     input: Source,
     decoder: CborDecoder,
 ) : BaseDecoder<CborByteString>(input, decoder) {
-
     @Throws(CborException::class)
     override fun decode(initialByte: Int): CborByteString {
         val length = getLength(initialByte)

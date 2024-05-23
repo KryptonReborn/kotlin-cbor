@@ -85,22 +85,23 @@ enum class MajorType(val value: Int) {
      * Major type 7: floating point numbers and simple data types that need no
      * content, as well as the "break" stop code. See Section 2.3.
      */
-    SPECIAL(7);
+    SPECIAL(7),
+    ;
 
     companion object {
-
         @Throws(CborException::class)
-        fun ofByte(b: Int): MajorType = when (b shr 5) {
-            0 -> UNSIGNED_INTEGER
-            1 -> NEGATIVE_INTEGER
-            2 -> BYTE_STRING
-            3 -> UNICODE_STRING
-            4 -> ARRAY
-            5 -> MAP
-            6 -> TAG
-            7 -> SPECIAL
-            else -> throw CborException("Not implemented major type $b")
-        }
+        fun ofByte(b: Int): MajorType =
+            when (b shr 5) {
+                0 -> UNSIGNED_INTEGER
+                1 -> NEGATIVE_INTEGER
+                2 -> BYTE_STRING
+                3 -> UNICODE_STRING
+                4 -> ARRAY
+                5 -> MAP
+                6 -> TAG
+                7 -> SPECIAL
+                else -> throw CborException("Not implemented major type $b")
+            }
     }
 }
 

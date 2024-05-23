@@ -35,7 +35,7 @@ class CborSinglePrecisionFloatTest1 :
  */
 class CborSinglePrecisionFloatTest2 : AbstractCborSinglePrecisionFloatTest(
     "3.4028234663852886e+38".toFloat(),
-    byteArrayOf(0xfa.toByte(), 0x7f, 0x7f.toByte(), 0xff.toByte(), 0xff.toByte())
+    byteArrayOf(0xfa.toByte(), 0x7f, 0x7f.toByte(), 0xff.toByte(), 0xff.toByte()),
 )
 
 /**
@@ -43,7 +43,7 @@ class CborSinglePrecisionFloatTest2 : AbstractCborSinglePrecisionFloatTest(
  */
 class CborSinglePrecisionFloatTest3 : AbstractCborSinglePrecisionFloatTest(
     Float.POSITIVE_INFINITY,
-    byteArrayOf(0xfa.toByte(), 0x7f, 0x80.toByte(), 0x00, 0x00)
+    byteArrayOf(0xfa.toByte(), 0x7f, 0x80.toByte(), 0x00, 0x00),
 )
 
 /**
@@ -57,5 +57,5 @@ class CborSinglePrecisionFloatTest4 :
  */
 class CborSinglePrecisionFloatTest5 : AbstractCborSinglePrecisionFloatTest(
     Float.NEGATIVE_INFINITY,
-    byteArrayOf(0xfa.toByte(), 0xff.toByte(), 0x80.toByte(), 0x00, 0x00)
+    byteArrayOf(0xfa.toByte(), 0xff.toByte(), 0x80.toByte(), 0x00, 0x00),
 )

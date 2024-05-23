@@ -5,7 +5,6 @@ import com.ionspin.kotlin.bignum.integer.toBigInteger
 import dev.kryptonreborn.cbor.CborDecoder
 import dev.kryptonreborn.cbor.CborException
 import dev.kryptonreborn.cbor.model.AdditionalInformation
-import dev.kryptonreborn.cbor.model.AdditionalInformation.*
 import dev.kryptonreborn.cbor.model.CborElement
 import kotlinx.io.Buffer
 import kotlinx.io.EOFException
@@ -45,7 +44,7 @@ abstract class BaseDecoder<T : CborElement>(
         } catch (eofException: EOFException) {
             throw CborException(
                 "Error reading from input, the underlying source is exhausted before byteCount bytes of data could be read.",
-                eofException
+                eofException,
             )
         } catch (e: IllegalArgumentException) {
             throw CborException("Error reading from input, byteCount is negative", e)
@@ -75,7 +74,8 @@ abstract class BaseDecoder<T : CborElement>(
                 throw CborException("Error reading from input, the source is exhausted", e)
             } catch (e: IndexOutOfBoundsException) {
                 throw CborException(
-                    "Error reading from input, startIndex or endIndex is out of range of sink array indices.", e
+                    "Error reading from input, startIndex or endIndex is out of range of sink array indices.",
+                    e,
                 )
             } catch (e: IllegalStateException) {
                 throw CborException("Error reading from input, the source is closed", e)
@@ -89,9 +89,9 @@ abstract class BaseDecoder<T : CborElement>(
     @Throws(CborException::class)
     protected fun getLength(initialByte: Int): Long {
         when (AdditionalInformation.ofByte(initialByte)) {
-            DIRECT -> return (initialByte and 31).toLong()
-            ONE_BYTE -> return nextSymbol().toLong()
-            TWO_BYTES -> {
+            AdditionalInformation.DIRECT -> return (initialByte and 31).toLong()
+            AdditionalInformation.ONE_BYTE -> return nextSymbol().toLong()
+            AdditionalInformation.TWO_BYTES -> {
                 var twoByteValue = 0L
                 val symbols = nextSymbols(2)
                 twoByteValue = twoByteValue or ((symbols[0].toInt() and 0xFF) shl 8).toLong()
@@ -99,7 +99,7 @@ abstract class BaseDecoder<T : CborElement>(
                 return twoByteValue
             }
 
-            FOUR_BYTES -> {
+            AdditionalInformation.FOUR_BYTES -> {
                 var fourByteValue = 0L
                 val symbols = nextSymbols(4)
                 fourByteValue = fourByteValue or ((symbols[0].toInt() and 0xFF).toLong() shl 24)
@@ -109,7 +109,7 @@ abstract class BaseDecoder<T : CborElement>(
                 return fourByteValue
             }
 
-            EIGHT_BYTES -> {
+            AdditionalInformation.EIGHT_BYTES -> {
                 var eightByteValue = 0L
                 val symbols = nextSymbols(8)
                 eightByteValue = eightByteValue or ((symbols[0].toInt() and 0xFF).toLong() shl 56)
@@ -123,8 +123,8 @@ abstract class BaseDecoder<T : CborElement>(
                 return eightByteValue
             }
 
-            INDEFINITE -> return INFINITY
-            RESERVED -> throw CborException("Reserved additional information")
+            AdditionalInformation.INDEFINITE -> return INFINITY
+            AdditionalInformation.RESERVED -> throw CborException("Reserved additional information")
             else -> throw CborException("Reserved additional information")
         }
     }
@@ -132,9 +132,9 @@ abstract class BaseDecoder<T : CborElement>(
     @Throws(CborException::class)
     protected fun getLengthAsBigInteger(initialByte: Int): BigInteger {
         when (AdditionalInformation.ofByte(initialByte)) {
-            DIRECT -> return (initialByte and 31).toLong().toBigInteger()
-            ONE_BYTE -> return nextSymbol().toLong().toBigInteger()
-            TWO_BYTES -> {
+            AdditionalInformation.DIRECT -> return (initialByte and 31).toLong().toBigInteger()
+            AdditionalInformation.ONE_BYTE -> return nextSymbol().toLong().toBigInteger()
+            AdditionalInformation.TWO_BYTES -> {
                 var twoByteValue = 0L
                 val symbols = nextSymbols(2)
                 twoByteValue = twoByteValue or ((symbols[0].toInt() and 0xFF) shl 8).toLong()
@@ -142,7 +142,7 @@ abstract class BaseDecoder<T : CborElement>(
                 return twoByteValue.toBigInteger()
             }
 
-            FOUR_BYTES -> {
+            AdditionalInformation.FOUR_BYTES -> {
                 var fourByteValue = 0L
                 val symbols = nextSymbols(4)
                 fourByteValue = fourByteValue or ((symbols[0].toInt() and 0xFF).toLong() shl 24)
@@ -152,7 +152,7 @@ abstract class BaseDecoder<T : CborElement>(
                 return fourByteValue.toBigInteger()
             }
 
-            EIGHT_BYTES -> {
+            AdditionalInformation.EIGHT_BYTES -> {
                 var eightByteValue = BigInteger.ZERO
                 val symbols = nextSymbols(8)
                 eightByteValue = eightByteValue xor ((symbols[0].toInt() and 0xFF).toLong().toBigInteger() shl 56)
@@ -166,8 +166,8 @@ abstract class BaseDecoder<T : CborElement>(
                 return eightByteValue
             }
 
-            INDEFINITE -> return INFINITY.toBigInteger()
-            RESERVED -> throw CborException("Reserved additional information")
+            AdditionalInformation.INDEFINITE -> return INFINITY.toBigInteger()
+            AdditionalInformation.RESERVED -> throw CborException("Reserved additional information")
             else -> throw CborException("Reserved additional information")
         }
     }

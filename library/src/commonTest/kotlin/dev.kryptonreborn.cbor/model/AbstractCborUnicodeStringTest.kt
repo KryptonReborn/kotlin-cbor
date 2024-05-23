@@ -61,5 +61,5 @@ class CborUnicodeStringTest6 :
 class CborUnicodeStringTest7 :
     AbstractCborUnicodeStringTest(
         "\ud800\udd51",
-        byteArrayOf(0x64, 0xf0.toByte(), 0x90.toByte(), 0x85.toByte(), 0x91.toByte())
+        byteArrayOf(0x64, 0xf0.toByte(), 0x90.toByte(), 0x85.toByte(), 0x91.toByte()),
     )
