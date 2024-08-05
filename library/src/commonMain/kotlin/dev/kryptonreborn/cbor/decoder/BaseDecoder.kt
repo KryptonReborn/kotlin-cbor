@@ -155,14 +155,14 @@ abstract class BaseDecoder<T : CborElement>(
             AdditionalInformation.EIGHT_BYTES -> {
                 var eightByteValue = BigInteger.ZERO
                 val symbols = nextSymbols(8)
-                eightByteValue = eightByteValue xor ((symbols[0].toInt() and 0xFF).toLong().toBigInteger() shl 56)
-                eightByteValue = eightByteValue xor ((symbols[1].toInt() and 0xFF).toLong().toBigInteger() shl 48)
-                eightByteValue = eightByteValue xor ((symbols[2].toInt() and 0xFF).toLong().toBigInteger() shl 40)
-                eightByteValue = eightByteValue xor ((symbols[3].toInt() and 0xFF).toLong().toBigInteger() shl 32)
-                eightByteValue = eightByteValue xor ((symbols[4].toInt() and 0xFF).toLong().toBigInteger() shl 24)
-                eightByteValue = eightByteValue xor ((symbols[5].toInt() and 0xFF).toLong().toBigInteger() shl 16)
-                eightByteValue = eightByteValue xor ((symbols[6].toInt() and 0xFF).toLong().toBigInteger() shl 8)
-                eightByteValue = eightByteValue xor ((symbols[7].toInt() and 0xFF).toLong().toBigInteger() shl 0)
+                eightByteValue = eightByteValue or ((symbols[0].toInt() and 0xFF).toLong().toBigInteger() shl 56)
+                eightByteValue = eightByteValue or ((symbols[1].toInt() and 0xFF).toLong().toBigInteger() shl 48)
+                eightByteValue = eightByteValue or ((symbols[2].toInt() and 0xFF).toLong().toBigInteger() shl 40)
+                eightByteValue = eightByteValue or ((symbols[3].toInt() and 0xFF).toLong().toBigInteger() shl 32)
+                eightByteValue = eightByteValue or ((symbols[4].toInt() and 0xFF).toLong().toBigInteger() shl 24)
+                eightByteValue = eightByteValue or ((symbols[5].toInt() and 0xFF).toLong().toBigInteger() shl 16)
+                eightByteValue = eightByteValue or ((symbols[6].toInt() and 0xFF).toLong().toBigInteger() shl 8)
+                eightByteValue = eightByteValue or ((symbols[7].toInt() and 0xFF).toLong().toBigInteger() shl 0)
                 return eightByteValue
             }
 
