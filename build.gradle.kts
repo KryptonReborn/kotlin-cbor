@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.androidLibrary).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.ktlint).apply(true)
+    alias(libs.plugins.dokka).apply(false)
+    alias(libs.plugins.kover).apply(false)
 }
 
 // https://youtrack.jetbrains.com/issue/KT-63014/Running-tests-with-wasmJs-in-1.9.20-requires-Chrome-Canary
