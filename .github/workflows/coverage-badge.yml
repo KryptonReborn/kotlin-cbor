@@ -32,7 +32,7 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{secrets.GH_GIST_TOKEN}}
-          gistID: <gistId>
+          gistID: 80bcc643522fc574144cb35911894d21
           filename: kotlin-cbor-coverage-badge.json
           label: coverage
           message: ${{env.COVERAGE}}%
