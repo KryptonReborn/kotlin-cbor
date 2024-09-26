@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 plugins {
     id(libs.plugins.commonMppLib.get().pluginId)
     id(libs.plugins.commonMppPublish.get().pluginId)
+    id(libs.plugins.kover.get().pluginId)
 }
 
 publishConfig {
@@ -35,4 +36,8 @@ rootProject.plugins.withType<YarnPlugin> {
         yarnLockMismatchReport = YarnLockMismatchReport.WARNING
         yarnLockAutoReplace = true
     }
+}
+
+tasks.dokkaHtml {
+    outputDirectory.set(layout.buildDirectory.dir("documentation/html"))
 }
